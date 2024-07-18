@@ -1,6 +1,12 @@
+from Models.User import User
+from Models.Device import Device
+from Models.Room import Room
+from Models.Log_In_Out import Login, Logout
 
 import falcon
-import Resource
+
+
+
 
 
 
@@ -12,19 +18,19 @@ app = falcon.App()
 
 
 # Add routes
-user_resource = Resource.User()
+user_resource = User()
 app.add_route('/users', user_resource)
 
-room_resource = Resource.Room()
+room_resource = Room()
 app.add_route('/rooms', room_resource)
 
-device_resource = Resource.Device()
+device_resource = Device()
 app.add_route('/devices', device_resource)
 
-login_resource = Resource.Login()
+login_resource = Login()
 app.add_route('/login', login_resource)
 
-logout_resource = Resource.Logout()
+logout_resource = Logout()
 app.add_route('/logout', logout_resource)
 
 
