@@ -4,3 +4,5 @@
 2024-07-18 11:16:36,299 - errors - ERROR - Attempted to create user with already existing ID -> ID = 55(1062, "Duplicate entry '0' for key 'PRIMARY'")
 2024-07-18 11:23:54,213 - errors - ERROR - Attempted to create user with already existing ID -> ID = 55(1062, "Duplicate entry '0' for key 'PRIMARY'")
 2024-07-18 11:25:46,815 - errors - ERROR - Attempted to create user with already existing ID -> ID = 55(1062, "Duplicate entry '0' for key 'PRIMARY'")
+2024-07-18 11:30:11,476 - errors - ERROR - Attempted to create user with already existing ID -> ID = 55(1062, "Duplicate entry '55' for key 'PRIMARY'")
+2024-07-18 11:30:14,421 - errors - ERROR - Attempted creating room with no ID -> ID = None
