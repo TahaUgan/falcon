@@ -28,9 +28,12 @@ class User(BaseModel):
         if(not id):
             user_list = User.select()
         else:
-            user_list = list(User.select().where(User.user_ID == id).dicts())
-            print(user_list)
+            user_list = User.select().where(User.user_ID == id)
+            # print(user_list)
             # print(User.ID)
+
+
+        user_list = list(user_list.dicts())
         #
         # for user in users:
         #     user_data = user.__data__
