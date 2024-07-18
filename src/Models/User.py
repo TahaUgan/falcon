@@ -81,7 +81,7 @@ class User(BaseModel):
 
 
             try:
-                new_user = User.create(ID = id, username = username, email = email, password = password, session = session, device_ID = device_ID)
+                new_user = User.create(user_ID = id, username = username, email = email, password = password, session = session, device_ID = device_ID)
                 new_user.save()
 
                 resp.status = falcon.HTTP_201
@@ -111,7 +111,7 @@ class User(BaseModel):
 
             filter = []
 
-            filter.append(User.ID == id)
+            filter.append(User.user_ID == id)
 
 
 
