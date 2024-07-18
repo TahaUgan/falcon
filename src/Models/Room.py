@@ -51,28 +51,40 @@ class Room(BaseModel):
 
 
     def on_get(self, req, resp, room_ID):
-
+        
         from Models.Device import Device
         from Models.User import User
+
+        
+
+
+        # users = []
+
+        # for devID in device_IDs:
+        #     user = User.select().where(User.device_ID == devID)[0]
+        #     users.append(user)
+
+
+        # resp.status = falcon.HTTP_200
+        # resp.body = json.dumps(users)
 
         subquery = (Device
             .select(Device.device_ID.alias('devID'))
             .join(Room, on=(Device.room_ID == Room.room_ID))
             .alias('A'))
 
-
-        users = (User
+        # Main query
+        query = (User
             .select(User.user_ID)
-            .join(subquery, on = (User.device_ID == subquery.devID)))
+            .join(subquery, on=(User.device_ID == subquery.c.devID)))
 
-        users = list(users.dicts())
+        # Execute the query
+        result = query.execute()
+
+        # result = list(result.dicts())
 
         resp.status = falcon.HTTP_200
-        resp.body = json.dumps(users)
-
-
-
-
+        resp.body = json.dumps(result)
 
 
 
