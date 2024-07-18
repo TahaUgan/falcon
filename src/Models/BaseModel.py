@@ -1,15 +1,27 @@
 from peewee import *
 from playhouse.pool import PooledMySQLDatabase
 
+import configparser
 
+config = configparser.ConfigParser()
+config.read("authorization.ini")
+dbinfo = config["mariadb"]
+
+dbname = dbinfo["database"]
+dbuser = dbinfo["username"]
+dbpassword = dbinfo["password"]
+dbhost = dbinfo["hostname"]
+dbport = dbinfo["port"]
+
+dbport = int(dbport)
 
 
 db = PooledMySQLDatabase(
-    'user',  # Replace with your database name
-    user='root',  # Replace with your MariaDB username
-    password='123456',  # Replace with your MariaDB password
-    host='localhost',  # Replace with your MariaDB host
-    port=3306  # Replace with your MariaDB port if different
+    dbname,  # Replace with your database name
+    user = dbuser,  # Replace with your MariaDB username
+    password = dbpassword,  # Replace with your MariaDB password
+    host = dbhost,  # Replace with your MariaDB host
+    port = dbport  # Replace with your MariaDB port if different
 )
 
 
