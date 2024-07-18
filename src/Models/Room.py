@@ -1,8 +1,6 @@
 from peewee import *
 from Models.BaseModel import BaseModel
 from Models.Loggers import e_logger, s_logger
-from Models.Device import Device
-from Models.User import User
 
 
 import falcon
@@ -54,22 +52,25 @@ class Room(BaseModel):
 
     def on_get(self, req, resp, room_ID):
 
+        from Models.Device import Device
+        from Models.User import User
+
         subquery = (Device
-            .select(Device.device_id.alias('devID'))
-            .join(Room, on=(Device.room == Room.room_id))
+            .select(Device.device_ID.alias('devID'))
+            .join(Room, on=(Device.room_ID == Room.room_ID))
             .alias('A'))
 
 
         users = (User
             .select(User.user_id)
-            .join(subquery, on=(User.device == subquery.c.devID)))
+            .join(subquery, on = (User.device_ID == subquery.devID)))
 
         users = list(users.dicts())
 
         resp.status = falcon.HTTP_200
         resp.body = json.dumps(users)
 
-        
+
 
 
 

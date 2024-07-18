@@ -23,6 +23,7 @@ app.add_route('/users', user_resource)
 
 room_resource = Room()
 app.add_route('/rooms', room_resource)
+app.add_route('/rooms/{room_ID}', room_resource)
 
 device_resource = Device()
 app.add_route('/devices', device_resource)
