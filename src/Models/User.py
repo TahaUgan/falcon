@@ -29,7 +29,7 @@ class User(BaseModel):
             user_list = User.select()
         else:
             user_list = list(User.select().where(User.user_ID == id).dicts())
-            # print(user_list)
+            print(user_list)
             # print(User.ID)
         #
         # for user in users:
