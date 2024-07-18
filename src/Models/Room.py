@@ -16,7 +16,6 @@ class Room(BaseModel):
 
     def on_get(self, req, resp):
 
-        print("teststestestsetestsetset")
 
         id = req.get_param('ID')
         room_list = []
@@ -36,7 +35,7 @@ class Room(BaseModel):
 
             rooms = Room.select().where(filters)
 
-            rooms = list(rooms.dicts())
+        rooms = list(rooms.dicts())
 
 
         if(len(room_list) == 0):
@@ -46,6 +45,7 @@ class Room(BaseModel):
 
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(room_list)
+        
 
 
     # def on_get_users(self, req, resp, room_ID):
