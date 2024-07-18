@@ -22,13 +22,13 @@ class User(BaseModel):
 
 
 
-        # id = req.get_param('ID')
+        id = req.get_param('ID')
         user_list = []
 
         if(not id):
             user_list = User.select()
         else:
-            user_list = list(User.select().dicts())
+            user_list = list(User.select().where(User.user_ID == id).dicts())
             # print(user_list)
             # print(User.ID)
         #
@@ -46,7 +46,8 @@ class User(BaseModel):
         else:
             resp.status = falcon.HTTP_200
 
-        user_list.append("made with 8001 port")
+        # user_list.append("made with 8001 port")
+        user_list.capitalize()
 
         resp.body = json.dumps(user_list)
 
@@ -61,6 +62,7 @@ class User(BaseModel):
         cursor = db.cursor()
 
         id = req.get_param('ID')
+        
 
         if(not id):
 
