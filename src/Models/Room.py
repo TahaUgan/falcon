@@ -8,12 +8,15 @@ import json
 
 
 
+
 class Room(BaseModel):
 
     room_ID = IntegerField(primary_key=True)
     name = CharField()
 
     def on_get(self, req, resp):
+
+        print("teststestestsetestsetset")
 
         id = req.get_param('ID')
         room_list = []
@@ -45,41 +48,29 @@ class Room(BaseModel):
             resp.body = json.dumps(room_list)
 
 
-    def on_get_users(self, req, resp, room_ID):
-
-        from Models.Device import Device
-        from Models.User import User
-
-
+    # def on_get_users(self, req, resp, room_ID):
+        
+    #     from Models.Device import Device
+    #     from Models.User import User
 
 
-        # users = []
+    #     subquery = (Device
+    #         .select(Device.device_ID.alias('devID'))
+    #         .join(Room, on=(Device.room_ID == Room.room_ID))
+    #         .alias('A'))
 
-        # for devID in device_IDs:
-        #     user = User.select().where(User.device_ID == devID)[0]
-        #     users.append(user)
+    #     # Main query
+    #     query = (User
+    #         .select(User.user_ID)
+    #         .join(subquery, on=(User.device_ID == subquery.c.devID)))
 
+    #     # Execute the query
+    #     result = query.execute()
 
-        # resp.status = falcon.HTTP_200
-        # resp.body = json.dumps(users)
+    #     # result = list(result.dicts())
 
-        subquery = (Device
-            .select(Device.device_ID.alias('devID'))
-            .join(Room, on=(Device.room_ID == Room.room_ID))
-            .alias('A'))
-
-        # Main query
-        query = (User
-            .select(User.user_ID)
-            .join(subquery, on=(User.device_ID == subquery.c.devID)))
-
-        # Execute the query
-        result = query.execute()
-
-        # result = list(result.dicts())
-
-        resp.status = falcon.HTTP_200
-        resp.body = json.dumps(result)
+    #     resp.status = falcon.HTTP_200
+    #     resp.body = json.dumps(result)
 
 
 

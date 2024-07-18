@@ -19,11 +19,13 @@ dbport = int(dbport)
 
 
 db = PooledMySQLDatabase(
+
     dbname,  # Replace with your database name
     user = dbuser,  # Replace with your MariaDB username
     password = dbpassword,  # Replace with your MariaDB password
     host = dbhost,  # Replace with your MariaDB host
     port = dbport  # Replace with your MariaDB port if different
+    
 )
 
 
