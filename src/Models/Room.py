@@ -34,11 +34,7 @@ class Room(BaseModel):
 
             rooms = Room.select().where(filters)
 
-
-        for room in rooms:
-            room_data = room.__data__
-            room_tuple = tuple(room_data.values())
-            room_list.append(room_tuple)
+            rooms = list(rooms.dicts())
 
 
         if(len(room_list) == 0):
@@ -50,7 +46,7 @@ class Room(BaseModel):
             resp.body = json.dumps(room_list)
 
 
-    def on_get(self, req, resp, room_ID):
+    def on_get_users(self, req, resp, room_ID):
         
         from Models.Device import Device
         from Models.User import User
