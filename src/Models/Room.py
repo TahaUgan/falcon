@@ -1,9 +1,13 @@
 from peewee import *
 from Models.BaseModel import BaseModel
 from Models.Loggers import e_logger, s_logger
+from Models.Device import Device
+from Models.User import User
+
 
 import falcon
 import json
+
 
 
 
@@ -46,6 +50,30 @@ class Room(BaseModel):
 
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(room_list)
+
+
+    def on_get(self, req, resp, room_ID):
+
+        subquery = (Device
+            .select(Device.device_id.alias('devID'))
+            .join(Room, on=(Device.room == Room.room_id))
+            .alias('A'))
+
+
+        users = (User
+            .select(User.user_id)
+            .join(subquery, on=(User.device == subquery.c.devID)))
+
+        users = list(users.dicts())
+
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(users)
+
+        
+
+
+
+
 
 
     def on_post(self, req, resp):
@@ -108,6 +136,11 @@ class Room(BaseModel):
                 resp.status = falcon.HTTP_204
                 resp.body = json.dumps({"error": "Room Not Found"})
                 e_logger.error("Attempted delete non-existing room")
+
+
+
+
+
 
 
 
