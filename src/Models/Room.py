@@ -15,7 +15,7 @@ class Room(BaseModel):
     name = CharField()
 
     def on_get(self, req, resp):
-
+    
 
         id = req.get_param('ID')
         room_list = []
@@ -37,40 +37,35 @@ class Room(BaseModel):
 
         rooms = list(rooms.dicts())
 
+        resp.body = json.dumps(rooms)
 
-        if(len(room_list) == 0):
-            resp.status = falcon.HTTP_204
-            resp.body = json.dumps("Room Not Found")
-        else:
 
-            resp.status = falcon.HTTP_200
-            resp.body = json.dumps(room_list)
+    
+    def on_get_users(self, req, resp, room_ID):
+        
+        from Models.Device import Device
+        from Models.User import User
+
+
         
 
-
-    # def on_get_users(self, req, resp, room_ID):
         
-    #     from Models.Device import Device
-    #     from Models.User import User
+        query = (User
+         .select(User)
+         .join(Device, on=(User.device_ID == Device.device_ID))
+         .join(Room, on=(Device.room_ID == Room.room_ID))
+         .where(Room.room_ID == room_ID))
 
 
-    #     subquery = (Device
-    #         .select(Device.device_ID.alias('devID'))
-    #         .join(Room, on=(Device.room_ID == Room.room_ID))
-    #         .alias('A'))
+        
 
-    #     # Main query
-    #     query = (User
-    #         .select(User.user_ID)
-    #         .join(subquery, on=(User.device_ID == subquery.c.devID)))
+        result = list(query.dicts())
 
-    #     # Execute the query
-    #     result = query.execute()
+        
 
-    #     # result = list(result.dicts())
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(result)
 
-    #     resp.status = falcon.HTTP_200
-    #     resp.body = json.dumps(result)
 
 
 

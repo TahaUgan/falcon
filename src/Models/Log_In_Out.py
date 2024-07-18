@@ -11,13 +11,13 @@ class Login(BaseModel):
 
     def on_post(self, req, resp):
 
-        User.on_login(User, req, resp)
+        on_login(User, req, resp)
 
 class Logout(BaseModel):
 
     def on_post(self, req, resp):
 
-        User.on_logout(User, req, resp)
+        on_logout(User, req, resp)
 
 
 

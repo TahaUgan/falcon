@@ -8,11 +8,6 @@ import falcon
 
 
 
-
-
-
-
-
 app = falcon.App()
 
 
@@ -22,8 +17,9 @@ user_resource = User()
 app.add_route('/users', user_resource)
 
 room_resource = Room()
-# app.add_route('/rooms/{room_ID}', room_resource, suffix = 'users')
 app.add_route('/rooms', room_resource)
+app.add_route('/rooms/{room_ID}', room_resource, suffix = 'users')
+
 
 device_resource = Device()
 app.add_route('/devices', device_resource)
@@ -42,3 +38,4 @@ if __name__ == '__main__':
     with make_server('', 8001, app) as httpd:
         print('Serving on port 8001...')
         httpd.serve_forever()
+
