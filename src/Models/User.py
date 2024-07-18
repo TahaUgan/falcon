@@ -47,7 +47,7 @@ class User(BaseModel):
             resp.status = falcon.HTTP_200
 
         # user_list.append("made with 8001 port")
-        user_list.capitalize()
+        # user_list.capitalize()
 
         resp.body = json.dumps(user_list)
 
