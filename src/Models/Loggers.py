@@ -4,7 +4,7 @@ import logging
 e_logger = logging.getLogger('errors')
 e_logger.setLevel(logging.DEBUG)
 
-fh = logging.FileHandler('logs/error.log')
+fh = logging.FileHandler('../logs/error.log')
 fh.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()
@@ -25,7 +25,7 @@ e_logger.addHandler(fh)
 s_logger = logging.getLogger('sessions')
 s_logger.setLevel(logging.DEBUG)
 
-fh = logging.FileHandler('logs/session.log')
+fh = logging.FileHandler('../logs/session.log')
 fh.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()
