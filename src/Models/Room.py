@@ -62,7 +62,7 @@ class Room(BaseModel):
 
 
         users = (User
-            .select(User.user_id)
+            .select(User.user_ID)
             .join(subquery, on = (User.device_ID == subquery.devID)))
 
         users = list(users.dicts())
