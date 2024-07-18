@@ -4,7 +4,7 @@ from playhouse.pool import PooledMySQLDatabase
 import configparser
 
 config = configparser.ConfigParser()
-config.read("authorization.ini")
+config.read("src/authorization.ini")
 dbinfo = config["mariadb"]
 
 dbname = dbinfo["database"]
