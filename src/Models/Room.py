@@ -8,7 +8,6 @@ import json
 
 
 
-
 class Room(BaseModel):
 
     room_ID = IntegerField(primary_key=True)
@@ -47,11 +46,11 @@ class Room(BaseModel):
 
 
     def on_get_users(self, req, resp, room_ID):
-        
+
         from Models.Device import Device
         from Models.User import User
 
-        
+
 
 
         # users = []
