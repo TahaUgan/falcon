@@ -1,7 +1,10 @@
 from peewee import *
 from Models.BaseModel import BaseModel, db
-from Models.Loggers import e_logger, s_logger
+from Models.Loggers import e_logger, s_logger, r_logger
 from Models.Device import Device
+from Models.GetIP import get_ip
+from Models.Session import generate_code
+
 import falcon
 import json
 
@@ -20,6 +23,9 @@ class User(BaseModel):
 
     def on_get(self, req, resp):
 
+        IP = get_ip()
+
+
 
 
         id = req.get_param('ID')
@@ -29,17 +35,10 @@ class User(BaseModel):
             user_list = User.select()
         else:
             user_list = User.select().where(User.user_ID == id)
-            # print(user_list)
-            # print(User.ID)
-
+  
 
         user_list = list(user_list.dicts())
-        #
-        # for user in users:
-        #     user_data = user.__data__
-        #     user_tuple = tuple(user_data.values())
-        #     user_list.append(user_tuple)
-
+     
 
         if(len(user_list) == 0):
 
@@ -49,10 +48,10 @@ class User(BaseModel):
         else:
             resp.status = falcon.HTTP_200
 
-        # user_list.append("made with 8001 port")
-        # user_list.capitalize()
-
         resp.body = json.dumps(user_list)
+
+        r_logger.info("Device with IP: " + str(IP) + " has accessed users")
+
 
 
 
@@ -139,4 +138,29 @@ class User(BaseModel):
                 resp.status = falcon.HTTP_409
                 resp.body = json.dumps({"error": "User does not exist"})
                 e_logger.error("Attempted to delete non-existing user")
+
+
+
+
+
+    def assign_session(self):
+
+        session_code = generate_code(16)
+        IP = get_ip()
+
+
+        count = User.select(fn.count(User.user_ID)).where(User.session == session_code)
+
+
+        if(not count):
+            self.session = session_code
+            self.save()
+            s_logger.info(f"New session has been assigned to user_ID: {self.user_ID} with IP: {IP}")
+            return True
+        else:
+            if(self.user_ID != self.user_ID):
+                User.assign_session(self)
+            else:
+                e_logger.warning(f"User with ID: {self.user_ID} has tried to login while having session from IP: {IP}")
+                r_logger.info(f"Request to login with existing user, user ID: {self.user_ID} from IP: {IP}")
 

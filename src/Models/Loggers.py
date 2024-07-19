@@ -4,18 +4,18 @@ import logging
 e_logger = logging.getLogger('errors')
 e_logger.setLevel(logging.DEBUG)
 
-fh = logging.FileHandler('logs/error.log')
-fh.setLevel(logging.DEBUG)
+efh = logging.FileHandler('logs/error.log')
+efh.setLevel(logging.DEBUG)
 
-ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
+ech = logging.StreamHandler()
+ech.setLevel(logging.ERROR)
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
+ech.setFormatter(formatter)
+efh.setFormatter(formatter)
 
-e_logger.addHandler(ch)
-e_logger.addHandler(fh)
+e_logger.addHandler(ech)
+e_logger.addHandler(efh)
 
 
 
@@ -25,16 +25,35 @@ e_logger.addHandler(fh)
 s_logger = logging.getLogger('sessions')
 s_logger.setLevel(logging.DEBUG)
 
-fh = logging.FileHandler('logs/session.log')
-fh.setLevel(logging.DEBUG)
+sfh = logging.FileHandler('logs/log_in_out.log')
+sfh.setLevel(logging.DEBUG)
 
-ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
+sch = logging.StreamHandler()
+sch.setLevel(logging.ERROR)
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
+sch.setFormatter(formatter)
+sfh.setFormatter(formatter)
 
-s_logger.addHandler(ch)
-s_logger.addHandler(fh)
+s_logger.addHandler(sch)
+s_logger.addHandler(sfh)
+
+
+
+
+r_logger = logging.getLogger('requests')
+r_logger.setLevel(logging.DEBUG)
+
+rfh = logging.FileHandler('logs/requests.log')
+rfh.setLevel(logging.DEBUG)
+
+rch = logging.StreamHandler()
+rch.setLevel(logging.ERROR)
+
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+rch.setFormatter(formatter)
+rfh.setFormatter(formatter)
+
+r_logger.addHandler(rch)
+r_logger.addHandler(rfh)
 

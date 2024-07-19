@@ -12,7 +12,6 @@ app = falcon.App()
 
 
 
-# Add routes
 user_resource = User()
 app.add_route('/users', user_resource)
 

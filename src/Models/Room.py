@@ -1,7 +1,7 @@
 from peewee import *
 from Models.BaseModel import BaseModel
 from Models.Loggers import e_logger, s_logger
-
+from Models.GetIP import get_ip
 
 import falcon
 import json

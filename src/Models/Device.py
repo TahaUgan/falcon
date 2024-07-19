@@ -1,8 +1,9 @@
 from peewee import *
 from Models.BaseModel import BaseModel
 from Models.Room import Room
-
+from Models.GetIP import get_ip
 from Models.Loggers import e_logger, s_logger
+
 import falcon
 import json
 
