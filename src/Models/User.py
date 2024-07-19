@@ -3,8 +3,9 @@ from Models.BaseModel import BaseModel, db
 from Models.Loggers import e_logger, s_logger, r_logger
 from Models.Device import Device
 from Models.GetIP import get_ip
-from Models.Session import generate_code
 
+import random
+import string
 import falcon
 import json
 
@@ -145,9 +146,11 @@ class User(BaseModel):
 
     def assign_session(self):
 
-        session_code = generate_code(16)
-        IP = get_ip()
+        
 
+        session_code = User.generate_code(16)
+        print(f"code is {session_code}")
+        IP = get_ip()
 
         count = User.select(fn.count(User.user_ID)).where(User.session == session_code)
 
@@ -163,4 +166,12 @@ class User(BaseModel):
             else:
                 e_logger.warning(f"User with ID: {self.user_ID} has tried to login while having session from IP: {IP}")
                 r_logger.info(f"Request to login with existing user, user ID: {self.user_ID} from IP: {IP}")
+
+
+    
+
+    def generate_code(N):
+
+        session_code = ''.join(random.choices(string.ascii_letters + string.digits, k = N))
+        return session_code
 

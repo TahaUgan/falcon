@@ -1,3 +1,17 @@
 2024-07-19 12:01:50,657 - errors - WARNING - User with ID: 3 has tried to login while having session from IP: 192.168.1.231
 2024-07-19 12:01:50,657 - errors - ERROR - Failed log-in attempt from IP: 192.168.1.231
 2024-07-19 12:03:41,736 - errors - WARNING - User with ID: 3 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 12:08:13,543 - errors - WARNING - Attempted to get a new session whioe having session, user ID: 3 and IP: 192.168.1.231
+2024-07-19 12:17:45,729 - errors - WARNING - Attempted to get a new session whioe having session, user ID: 3 and IP: 192.168.1.231
+2024-07-19 12:18:26,920 - errors - WARNING - Attempted to get a new session whioe having session, user ID: 3 and IP: 192.168.1.231
+2024-07-19 12:18:44,868 - errors - WARNING - Attempted to get a new session whioe having session, user ID: 3 and IP: 192.168.1.231
+2024-07-19 12:30:00,160 - errors - WARNING - User with ID: 3 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 12:34:41,117 - errors - WARNING - User with ID: 3 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 12:34:53,208 - errors - ERROR - Attempted to log out while not having a session, user ID: 3 and IP: 192.168.1.231
+2024-07-19 12:35:24,988 - errors - WARNING - User with ID: 3 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 12:54:42,938 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 12:56:06,724 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 12:57:18,804 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 13:00:14,593 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 13:02:18,116 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 13:04:00,767 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231

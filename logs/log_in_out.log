@@ -1,2 +1,2 @@
-2024-07-19 11:47:12,013 - sessions - INFO - New session has been assigned to user_ID: 3 with IP: 192.168.1.231
 2024-07-19 11:48:12,941 - sessions - INFO - New session has been assigned to user_ID: 3 with IP: 192.168.1.231
+2024-07-19 12:23:20,081 - sessions - INFO - User with user ID: 3 has logged out, IP: 192.168.1.231

@@ -4,6 +4,8 @@ from Models.Loggers import e_logger, s_logger, r_logger
 from Models.Device import Device
 from Models.Room import Room
 from Models.GetIP import get_ip
+from Models.Session import Sessions
+from datetime import datetime
 from peewee import *
 
 import json
@@ -47,16 +49,23 @@ def on_login(self, req, resp):
         r_logger.error("Failed log-in request from IP: " + str(IP))
     else:
 
-        if(not user.session):
+        if(user.session == None):
 
 
-            res = user.assign_session()
+            res = User.assign_session(user)
+
 
             if(res):
 
+                current = datetime.now()
+                session = session.create(session_code = user.session, session_start = current, user_ID = user.user_ID)
+
                 r_logger.info(f"User with user_ID: {user.user_ID} has been assigned a new session from IP: {IP}")
+
                 resp.status = falcon.HTTP_200
                 resp.body = json.dumps("Successfully logged in")
+            else:
+                resp.body = "Something went wring"
        
 
         else:
@@ -83,11 +92,22 @@ def on_logout(self, req, resp):
         user = User.select().where(User.user_ID == userID)[0]
 
         if(not user.session):
+        
             resp.status = falcon.HTTP_400
             resp.body = json.dumps("You don't have a session to log-out from")
 
             e_logger.error(f"Attempted to log out while not having a session, user ID: {user.user_ID} and IP: {IP}")
             r_logger.info(f"Attemp to log out while not logged-in, user ID: {user.user_ID} and IP: {IP}")
+        
+        else:
+
+            user.session = None
+            user.save()
+
+            resp.status = falcon.HTTP_200
+            resp.body = f"Successfully log-out"
+
+            s_logger.info(f"User with user ID: {user.user_ID} has logged out, IP: {IP}")
 
 
 
