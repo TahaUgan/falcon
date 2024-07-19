@@ -11,10 +11,10 @@ import string
 class Sessions(BaseModel):
 
 
-    session_code = CharField(primary_key = True)
-    session_start = DateField()
-    session_end = DateField()
-    user_ID = ForeignKeyField(User, db_column = 'user_ID'  , backref = 'sessions')
+    Session_Code = CharField(primary_key = True)
+    Session_Start = DateField()
+    Session_End = DateField()
+    User_ID = ForeignKeyField(User, db_column = 'user_ID'  , backref = 'Sessions')
 
 
 

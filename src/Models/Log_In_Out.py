@@ -25,8 +25,6 @@ class Logout(BaseModel):
         logout(User, req, resp)
 
 
-
-    
 def login(self, req, resp):
 
 
@@ -37,7 +35,7 @@ def login(self, req, resp):
     username = data.get('username')
     password = data.get('password')
     
-    user = User.select().where(User.username == username, User.password == password)[0]
+    user = User.select().where(User.username == username, User.password == password).get()
 
     IP = get_ip()
     if(not user):
@@ -49,17 +47,18 @@ def login(self, req, resp):
         r_logger.error("Failed log-in request from IP: " + str(IP))
     else:
 
-        print(f"session is: {user.session}")
+        ID = user.user_ID
+        user.save()
+
         if(not user.session):
 
+            session_no = user.assign_session()
 
-            res = user.assign_session()
-            print(res)
+            if(user.session):
 
-            if(res):
-
-                current = datetime.now()
-                session = session.create(session_code = user.session, session_start = current, user_ID = user.user_ID)
+                now = fn.now()
+                session = Sessions.create(Session_Code = session_no, Session_Start = now, Session_End = None, User_ID = ID)
+                session.save()
 
                 r_logger.info(f"User with user_ID: {user.user_ID} has been assigned a new session from IP: {IP}")
 
@@ -91,6 +90,8 @@ def logout(self, req, resp):
     if(user_count):
         
         user = User.select().where(User.user_ID == userID)[0]
+        session_no = user.session
+
 
         if(not user.session):
         
@@ -101,6 +102,10 @@ def logout(self, req, resp):
             r_logger.info(f"Attemp to log out while not logged-in, user ID: {user.user_ID} and IP: {IP}")
         
         else:
+
+            session = Sessions.select().where(Sessions.Session_Code == session_no)[0]
+            session.Session_End = fn.NOW()
+            session.save()
 
             user.session = None
             user.save()

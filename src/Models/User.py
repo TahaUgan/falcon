@@ -24,10 +24,9 @@ class User(BaseModel):
 
     def on_get(self, req, resp):
 
+
+
         IP = get_ip()
-
-
-
 
         id = req.get_param('ID')
         user_list = []
@@ -62,17 +61,13 @@ class User(BaseModel):
 
     def on_post(self, req, resp):
 
-        cursor = db.cursor()
-
         id = req.get_param('ID')
         
-
         if(not id):
 
             resp.status = falcon.HTTP_400
             resp.body = json.dumps({"error": "ID field required"})
             e_logger.error("Attempted creating user with no ID -> ID = " + str(id))
-
 
         else:
 
@@ -81,7 +76,6 @@ class User(BaseModel):
             email = req.get_param('email')
             session = req.get_param('session')
             device_ID = req.get_param('device_ID')
-
 
             try:
                 new_user = User.create(user_ID = id, username = username, email = email, password = password, session = session, device_ID = device_ID)
@@ -156,18 +150,20 @@ class User(BaseModel):
         print(f"Count is {count}")
 
 
-        if(count == 0):
+        if(count != 0): # means that there is no userwith that session code
             self.session = session_code
             self.save()
+            
             s_logger.info(f"New session has been assigned to user_ID: {self.user_ID} with IP: {IP}")
-            return True
+            
         else:
             if(self.user_ID != self.user_ID):
                 User.assign_session(self)
             else:
                 e_logger.warning(f"User with ID: {self.user_ID} has tried to login while having session from IP: {IP}")
                 r_logger.info(f"Request to login with existing user, user ID: {self.user_ID} from IP: {IP}")
-                return False
+
+        return session_code
 
 
     
