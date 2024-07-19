@@ -18,7 +18,7 @@ app.add_route('/users', user_resource)
 
 room_resource = Room()
 app.add_route('/rooms', room_resource)
-app.add_route('/rooms/{room_ID}', room_resource, suffix = 'users')
+app.add_route('/rooms/{room_ID}/users', room_resource, suffix = 'users')
 
 
 device_resource = Device()
