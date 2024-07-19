@@ -16,18 +16,18 @@ class Login(BaseModel):
 
     def on_post(self, req, resp):
 
-        on_login(User, req, resp)
+        login(User, req, resp)
 
 class Logout(BaseModel):
 
     def on_post(self, req, resp):
 
-        on_logout(User, req, resp)
+        logout(User, req, resp)
 
 
 
     
-def on_login(self, req, resp):
+def login(self, req, resp):
 
 
     raw_body = req.bounded_stream.read()
@@ -49,11 +49,12 @@ def on_login(self, req, resp):
         r_logger.error("Failed log-in request from IP: " + str(IP))
     else:
 
-        if(user.session == None):
+        print(f"session is: {user.session}")
+        if(not user.session):
 
 
-            res = User.assign_session(user)
-
+            res = user.assign_session()
+            print(res)
 
             if(res):
 
@@ -77,7 +78,7 @@ def on_login(self, req, resp):
 
 
 
-def on_logout(self, req, resp):
+def logout(self, req, resp):
 
     raw_body = req.bounded_stream.read()
     data = json.loads(raw_body)

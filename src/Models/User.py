@@ -149,13 +149,14 @@ class User(BaseModel):
         
 
         session_code = User.generate_code(16)
-        print(f"code is {session_code}")
+        
         IP = get_ip()
 
-        count = User.select(fn.count(User.user_ID)).where(User.session == session_code)
+        count = User.select(fn.count(User.user_ID)).where(User.session == session_code).get()
+        print(f"Count is {count}")
 
 
-        if(not count):
+        if(count == 0):
             self.session = session_code
             self.save()
             s_logger.info(f"New session has been assigned to user_ID: {self.user_ID} with IP: {IP}")
@@ -166,6 +167,7 @@ class User(BaseModel):
             else:
                 e_logger.warning(f"User with ID: {self.user_ID} has tried to login while having session from IP: {IP}")
                 r_logger.info(f"Request to login with existing user, user ID: {self.user_ID} from IP: {IP}")
+                return False
 
 
     

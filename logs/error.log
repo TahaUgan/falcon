@@ -15,3 +15,14 @@
 2024-07-19 13:00:14,593 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
 2024-07-19 13:02:18,116 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
 2024-07-19 13:04:00,767 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 14:20:38,406 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 14:22:09,093 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 14:22:49,766 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 14:23:26,721 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 14:25:50,373 - errors - WARNING - Attempted to get a new session whioe having session, user ID: 4 and IP: 192.168.1.231
+2024-07-19 14:28:44,911 - errors - WARNING - Attempted to get a new session whioe having session, user ID: 4 and IP: 192.168.1.231
+2024-07-19 14:29:26,597 - errors - WARNING - Attempted to get a new session whioe having session, user ID: 4 and IP: 192.168.1.231
+2024-07-19 14:30:01,236 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 14:31:25,403 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 14:34:57,090 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231
+2024-07-19 14:36:05,229 - errors - WARNING - User with ID: 4 has tried to login while having session from IP: 192.168.1.231

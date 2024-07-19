@@ -15,3 +15,12 @@
 2024-07-19 13:00:14,593 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
 2024-07-19 13:02:18,116 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
 2024-07-19 13:04:00,767 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
+2024-07-19 14:17:22,351 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-19 14:18:51,862 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-19 14:20:38,407 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
+2024-07-19 14:22:09,093 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
+2024-07-19 14:22:49,766 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
+2024-07-19 14:23:26,721 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
+2024-07-19 14:30:01,236 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
+2024-07-19 14:31:25,403 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
+2024-07-19 14:34:57,091 - requests - INFO - Request to login with existing user, user ID: 4 from IP: 192.168.1.231
