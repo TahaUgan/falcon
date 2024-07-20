@@ -30,8 +30,6 @@ class Logout(BaseModel):
 def login(req, resp):
 
 
-    raw_body = req.bounded_stream.read()
-    data = json.loads(raw_body)
 
     headers_dict = req.headers
     auth = headers_dict.get("AUTHORIZATION")
@@ -56,47 +54,37 @@ def login(req, resp):
     except DoesNotExist as e:
         resp.status = falcon.HTTP_203
         resp.body = "wrong username or password"
-        return
-
-
-
-    IP = get_ip()
-    if(not user):
-        resp.status = falcon.HTTP_203
-        resp.body = json.dumps("Wrong username/password")
-
-
+        IP = get_ip()
+        
         e_logger.error("Failed log-in attempt from IP: " + str(IP))
         r_logger.error("Failed log-in request from IP: " + str(IP))
-    else:
-
-        if not user.session:
-            new_session_code = generate_code(16)
-            user.session = new_session_code
-            user.save()
-            session = Sessions.create(Session_Code = str(new_session_code), user_ID = user.user_ID).save()
-            
-            message = "You have successfully logged-in"
-            res = "Successfull"
-        else:
-            new_session_code = None
-            message = "You already have a session"
-            res = "Failed"
-
-        return_dict = {}
-
+        return
         
 
-        return_dict.update({"Message: ": message})
-        return_dict.update({"Result: ": res})
-
-        if new_session_code:
-            return_dict.update({"Session: ": new_session_code})
 
 
+  
 
-        resp.status = falcon.HTTP_200
-        resp.body = json.dumps(return_dict)
+    if not user.session:
+        new_session_code = generate_code(16)
+        user.session = new_session_code
+        user.save()
+        session = Sessions.create(Session_Code = str(new_session_code), user_ID = user.user_ID).save()
+        
+        message = "You have successfully logged-in"
+        res = "Successfull"
+    else:
+        new_session_code = None
+        message = "You already have a session"
+        res = "Failed"
+    return_dict = {}
+    
+    return_dict.update({"Message: ": message})
+    return_dict.update({"Result: ": res})
+    if new_session_code:
+        return_dict.update({"Session: ": new_session_code})
+    resp.status = falcon.HTTP_200
+    resp.body = json.dumps(return_dict)
 
         
 
@@ -106,14 +94,18 @@ def logout(req, resp):
 
     headers_dict = req.headers
 
+    
+
+    id = headers_dict.get("ID")
 
     given_code = headers_dict.get("SESSION-CODE")
+    
 
     try:
-        user = User.select().where(User.session == given_code).get()
+        user = User.select().where(User.user_ID == id).get()
     except DoesNotExist as e:
         resp.status = falcon.HTTP_404
-        resp.body = "this user is not logged-in"
+        resp.body = "there is no such user"
         return
     
 
@@ -124,7 +116,10 @@ def logout(req, resp):
         resp.body = "You lack the authority to do this"
         return
 
-    count = Sessions.select(fn.Count(Sessions.Session_Code)).where(Sessions.Session_Code == given_code)
+    try:
+        count = Sessions.select(fn.Count(Sessions.Session_Code)).where(Sessions.Session_Code == given_code)
+    except:
+        pass
     count = count.scalar()
 
 
@@ -135,10 +130,20 @@ def logout(req, resp):
         resp.body = "Request Invalid"
 
     else:
-        raw_body = req.bounded_stream.read()
-        data = json.loads(raw_body)
+        
+        data = req.headers
+
         userID = data.get('ID')
-        user = User.select().where(User.user_ID == userID).get()
+        try:
+            user = User.select().where(User.user_ID == userID, User.session != None).get()
+        except DoesNotExist as e:
+
+            resp.status = falcon.HTTP_400
+            resp.body = "this user is not logged in"
+            return
+
+
+
         user.session = None
         user.save()
 
