@@ -59,3 +59,5 @@
 2024-07-19 16:16:05,405 - requests - INFO - Device with IP: 192.168.241.137 has accessed users
 2024-07-19 16:54:11,470 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
 2024-07-20 09:16:08,898 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-20 10:44:07,744 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-20 10:48:25,263 - requests - INFO - Device with IP: 192.168.1.231 has accessed users

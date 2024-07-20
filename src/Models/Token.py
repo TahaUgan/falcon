@@ -1,15 +1,22 @@
-from Models.BaseModel import BaseModel
-from peewee import *
 
+import configparser
 
-class Token(BaseModel):
+config = configparser.ConfigParser()
+config.read("authorization.ini")
 
-    token_Code = CharField(primary_key = True)
-    access_Level = IntegerField()
+token_info = config["tokens"]
 
-    def get_access_level(token_code):
+class Token():
 
-        access_level = Token.select(Token.access_Level).where(Token.token_Code == token_code)
-        return access_level
-    
+    def get_tokens():
 
+        toks = token_info.get('token')
+        return tuple(toks)
+
+    def check_token(tok):
+        tokens = Token.get_tokens()
+        
+        if(tok in tokens):
+            return True
+        else:
+            return False
