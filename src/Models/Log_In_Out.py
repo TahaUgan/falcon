@@ -1,3 +1,5 @@
+import random
+import string
 from Models.BaseModel import BaseModel
 from Models.User import User
 from Models.Loggers import e_logger, s_logger, r_logger
@@ -47,31 +49,17 @@ def login(self, req, resp):
         r_logger.error("Failed log-in request from IP: " + str(IP))
     else:
 
-        ID = user.user_ID
+        new_session_code = generate_code(16)
+        
+
+        user.session = new_session_code
         user.save()
 
-        if(not user.session):
+        session = Sessions.create(Session_Code = str(new_session_code), user_ID = user.user_ID).save()
+        
 
-            session_no = user.assign_session()
-
-            if(user.session):
-
-                now = fn.now()
-                session = Sessions.create(Session_Code = session_no, Session_Start = now, Session_End = None, User_ID = ID)
-                session.save()
-
-                r_logger.info(f"User with user_ID: {user.user_ID} has been assigned a new session from IP: {IP}")
-
-                resp.status = falcon.HTTP_200
-                resp.body = json.dumps("Successfully logged in")
-            else:
-                resp.body = "Something went wring"
-       
-
-        else:
-            resp.status = falcon.HTTP_200
-            resp.body = json.dumps("This user already has a session")
-            e_logger.warning(f"Attempted to get a new session whioe having session, user ID: {user.user_ID} and IP: {IP}")
+        resp.status = falcon.HTTP_200
+        resp.body = new_session_code
 
         
 
@@ -79,47 +67,36 @@ def login(self, req, resp):
 
 def logout(self, req, resp):
 
-    raw_body = req.bounded_stream.read()
-    data = json.loads(raw_body)
-    userID = data.get('ID')
+    headers_dict = req.headers
 
-    user_count = User.select(fn.count(User.user_ID)).where(User.user_ID == userID)
+    given_code = headers_dict.get("SESSION-CODE")
     
-    IP = get_ip()
 
-    if(user_count):
-        
-        user = User.select().where(User.user_ID == userID)[0]
-        session_no = user.session
+    count = Sessions.select(fn.Count(Sessions.Session_Code)).where(Sessions.Session_Code == given_code)
+    count = count.scalar()
+    
 
+    if (not count) or (not given_code):
+        resp.status = falcon.HTTP_401
+        resp.body = "Request Invalid"
 
-        if(not user.session):
-        
-            resp.status = falcon.HTTP_400
-            resp.body = json.dumps("You don't have a session to log-out from")
+    else:
+        raw_body = req.bounded_stream.read()
+        data = json.loads(raw_body)
+        userID = data.get('ID')
+        user = User.select().where(User.user_ID == userID).get()
+        user.session = None
+        user.save()
 
-            e_logger.error(f"Attempted to log out while not having a session, user ID: {user.user_ID} and IP: {IP}")
-            r_logger.info(f"Attemp to log out while not logged-in, user ID: {user.user_ID} and IP: {IP}")
-        
-        else:
-
-            session = Sessions.select().where(Sessions.Session_Code == session_no)[0]
-            session.Session_End = fn.NOW()
-            session.save()
-
-            user.session = None
-            user.save()
-
-            resp.status = falcon.HTTP_200
-            resp.body = f"Successfully log-out"
-
-            s_logger.info(f"User with user ID: {user.user_ID} has logged out, IP: {IP}")
-
+        session = Sessions.select().where(Sessions.Session_Code == given_code).get()
+        session.
 
 
 
     
 
 
+def generate_code(N):
 
-
+    session_code = ''.join(random.choices(string.ascii_letters + string.digits, k = N))
+    return session_code

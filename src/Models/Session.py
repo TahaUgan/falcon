@@ -12,8 +12,7 @@ class Sessions(BaseModel):
 
 
     Session_Code = CharField(primary_key = True)
-    Session_Start = DateField()
-    Session_End = DateField()
+    End_Date = DateTimeField()
     User_ID = ForeignKeyField(User, db_column = 'user_ID'  , backref = 'Sessions')
 
 
