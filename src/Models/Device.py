@@ -17,6 +17,24 @@ class Device(BaseModel):
 
     def on_get(self, req, resp):
 
+         
+        headers = req.headers
+
+        session = headers.get("SESSION")
+        token = headers.get("TOKEN")
+
+        from Models.Session import Sessions
+        from Models.Token import Token
+
+        is_session = Sessions.check_session(session)
+        is_token = Token.check_token(token)
+
+        if not is_session or not is_token:
+            resp.status = falcon.HTTP_401
+            resp.body = "You have no authority to do so"
+            return
+    
+
         id = req.get_param('device_ID')
         device_list = []
 
@@ -62,6 +80,24 @@ class Device(BaseModel):
 
     def on_post(self, req, resp):
 
+         
+        headers = req.headers
+
+        session = headers.get("SESSION")
+        token = headers.get("TOKEN")
+
+        from Models.Session import Sessions
+        from Models.Token import Token
+
+        is_session = Sessions.check_session(session)
+        is_token = Token.check_token(token)
+
+        if not is_session or not is_token:
+            resp.status = falcon.HTTP_401
+            resp.body = "You have no authority to do so"
+            return
+    
+
 
         id = req.get_param('device_ID')
 
@@ -91,6 +127,24 @@ class Device(BaseModel):
                 e_logger.error("Attempted to create device with already existing ID -> ID = " + str(id))
 
     def on_delete(self, req, resp):
+
+         
+        headers = req.headers
+
+        session = headers.get("SESSION")
+        token = headers.get("TOKEN")
+
+        from Models.Session import Sessions
+        from Models.Token import Token
+
+        is_session = Sessions.check_session(session)
+        is_token = Token.check_token(token)
+
+        if not is_session or not is_token:
+            resp.status = falcon.HTTP_401
+            resp.body = "You have no authority to do so"
+            return
+    
 
         id = req.get_param('device_ID')
 

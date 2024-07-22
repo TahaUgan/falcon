@@ -11,12 +11,14 @@ class Token():
     def get_tokens():
 
         toks = token_info.get('token')
-        return tuple(toks)
+        return toks.split(",")
 
     def check_token(tok):
         tokens = Token.get_tokens()
         
-        if(tok in tokens):
+        if tok in tokens:
             return True
         else:
             return False
+
+

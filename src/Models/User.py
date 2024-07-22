@@ -3,6 +3,7 @@ from Models.BaseModel import BaseModel, db
 from Models.Loggers import e_logger, s_logger, r_logger
 from Models.Device import Device
 from Models.GetIP import get_ip
+from Models.Token import Token
 
 import random
 import string
@@ -24,7 +25,20 @@ class User(BaseModel):
 
     def on_get(self, req, resp):
 
+        headers = req.headers
 
+        session = headers.get("SESSION")
+        token = headers.get("TOKEN")
+
+        from Models.Session import Sessions
+
+        is_session = Sessions.check_session(session)
+        is_token = Token.check_token(token)
+
+        if not is_session or not is_token:
+            resp.status = falcon.HTTP_401
+            resp.body = "You have no authority to do so"
+            return
 
         IP = get_ip()
 
@@ -61,6 +75,22 @@ class User(BaseModel):
 
     def on_post(self, req, resp):
 
+        
+        headers = req.headers
+
+        session = headers.get("SESSION")
+        token = headers.get("TOKEN")
+
+        from Models.Session import Sessions
+
+        is_session = Sessions.check_session(session)
+        is_token = Token.check_token(token)
+
+        if not is_session or not is_token:
+            resp.status = falcon.HTTP_401
+            resp.body = "You have no authority to do so"
+            return
+
         id = req.get_param('ID')
         
         if(not id):
@@ -90,6 +120,21 @@ class User(BaseModel):
 
 
     def on_delete(self, req, resp):
+        
+        headers = req.headers
+
+        session = headers.get("SESSION")
+        token = headers.get("TOKEN")
+
+        from Models.Session import Sessions
+
+        is_session = Sessions.check_session(session)
+        is_token = Token.check_token(token)
+
+        if not is_session or not is_token:
+            resp.status = falcon.HTTP_401
+            resp.body = "You have no authority to do so"
+            return
 
         id = req.get_param('ID')
         if(not id):
