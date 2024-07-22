@@ -192,7 +192,6 @@ class User(BaseModel):
         IP = get_ip()
 
         count = User.select(fn.count(User.user_ID)).where(User.session == session_code).get()
-        print(f"Count is {count}")
 
 
         if(count != 0): # means that there is no userwith that session code

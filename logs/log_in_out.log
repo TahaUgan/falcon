@@ -1,0 +1,31 @@
+2024-07-22 10:34:49,915 - sessions - INFO - You have successfully logged-in from IP: 192.168.1.231
+2024-07-22 10:52:44,061 - sessions - INFO - User 9 successfully logged out - IP: 192.168.1.231
+
+2024-07-22 10:56:29,942 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 10:56:37,114 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:10:02,371 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:10:32,168 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:13:55,384 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:14:01,775 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:14:04,833 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:14:33,860 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:17:02,296 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:17:37,329 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:17:44,779 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:18:04,887 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:18:12,440 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:18:14,554 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:18:23,167 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:18:42,062 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:18:58,027 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:19:09,678 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:24:41,178 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:24:50,750 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:28:37,619 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:28:40,456 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:28:57,204 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 11:29:05,649 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:29:09,298 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:29:10,378 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
+2024-07-22 11:29:22,818 - sessions - INFO - User with ID: 8 has logged-in from IP: 192.168.1.231
+2024-07-22 11:29:56,010 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231

@@ -1,0 +1,13 @@
+2024-07-22 10:36:45,595 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-22 10:44:31,966 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-22 10:45:33,959 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-22 10:46:03,413 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-22 10:47:41,355 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-22 11:13:41,020 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
+2024-07-22 11:14:21,020 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
+2024-07-22 11:17:15,637 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
+2024-07-22 11:17:35,057 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
+2024-07-22 11:24:32,917 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
+2024-07-22 11:28:51,417 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
+2024-07-22 11:28:52,853 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
+2024-07-22 11:29:44,039 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231

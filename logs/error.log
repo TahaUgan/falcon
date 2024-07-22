@@ -1,0 +1,16 @@
+2024-07-22 10:34:26,430 - errors - WARNING - User with ID 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 10:34:32,830 - errors - WARNING - User with ID 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 10:53:56,498 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 10:55:11,402 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 10:55:36,814 - errors - ERROR - Unauthorized access attempt with token: MLojkODry9Q3GegL8efHy44Kl - IP: 192.168.1.231
+2024-07-22 10:58:25,520 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 11:09:59,522 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 11:11:48,290 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 11:12:48,961 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 11:12:59,339 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 11:17:37,330 - errors - WARNING - Error while deleting session: 95UsVPHfQxXPnqpy --> '>' not supported between instances of 'User' and 'int'
+2024-07-22 11:18:04,887 - errors - WARNING - Error while deleting session: VL6GPSgPtdpgLpZo --> '>' not supported between instances of 'User' and 'int'
+2024-07-22 11:18:14,554 - errors - WARNING - Error while deleting session: H4MoNAwS16GZhYCA --> '>' not supported between instances of 'User' and 'int'
+2024-07-22 11:18:42,062 - errors - WARNING - Error while deleting session: NYc8PODjrAY07BQy --> '>' not supported between instances of 'User' and 'int'
+2024-07-22 11:18:51,353 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
+2024-07-22 11:19:09,691 - errors - WARNING - Error while deleting session: vWfqHBlbqg1DN8nI --> '>' not supported between instances of 'User' and 'int'
