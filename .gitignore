@@ -1,4 +1,4 @@
 .ini
 authorization.ini
 
-.log
+*.log
