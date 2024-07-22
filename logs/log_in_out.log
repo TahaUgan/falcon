@@ -29,3 +29,5 @@
 2024-07-22 11:29:10,378 - sessions - INFO - User with ID: 9 has logged-in from IP: 192.168.1.231
 2024-07-22 11:29:22,818 - sessions - INFO - User with ID: 8 has logged-in from IP: 192.168.1.231
 2024-07-22 11:29:56,010 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
+2024-07-22 12:08:17,115 - sessions - INFO - User with ID: 8 successfully logged out - IP: 192.168.1.231
+2024-07-22 12:12:06,974 - sessions - INFO - User with ID: 8 has logged-in from IP: 192.168.1.231

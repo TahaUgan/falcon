@@ -14,3 +14,4 @@
 2024-07-22 11:18:42,062 - errors - WARNING - Error while deleting session: NYc8PODjrAY07BQy --> '>' not supported between instances of 'User' and 'int'
 2024-07-22 11:18:51,353 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
 2024-07-22 11:19:09,691 - errors - WARNING - Error while deleting session: vWfqHBlbqg1DN8nI --> '>' not supported between instances of 'User' and 'int'
+2024-07-22 12:08:08,016 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231

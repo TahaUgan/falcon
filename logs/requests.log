@@ -11,3 +11,6 @@
 2024-07-22 11:28:51,417 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
 2024-07-22 11:28:52,853 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
 2024-07-22 11:29:44,039 - requests - WARNING - No SESSION-CODE sent in the request headers. - IP: 192.168.1.231
+2024-07-22 12:06:40,658 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-22 12:12:18,152 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-22 12:17:15,579 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
