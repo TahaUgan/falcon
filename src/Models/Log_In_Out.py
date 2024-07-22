@@ -111,7 +111,7 @@ class Logout(BaseModel):
         print(f"id bool is this: {not id}")
 
     
-        if not str(id):
+        if not id:
             resp.status = falcon.HTTP_204
             resp.body = "No ID sent"
             print("Yeah, no id sent here")
@@ -126,16 +126,6 @@ class Logout(BaseModel):
             resp.body = "there is no such user"
             return
         
-    
-        token = headers_dict.get("TOKEN")
-          
-        from Models.Token import Token
-
-        if not Token.check_token(token):
-            resp.status = falcon.HTTP_401
-            resp.body = "You have no authority to do so"
-            return
-
             
         given_code = headers_dict.get("SESSION-CODE")
         try:
