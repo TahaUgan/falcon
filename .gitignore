@@ -2,3 +2,6 @@
 authorization.ini
 
 *.log
+logs/error.log
+logs/log_in_out.log
+logs/requests.log
