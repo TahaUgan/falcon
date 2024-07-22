@@ -31,3 +31,13 @@
 2024-07-22 11:29:56,010 - sessions - INFO - User with ID: 9 successfully logged out - IP: 192.168.1.231
 2024-07-22 12:08:17,115 - sessions - INFO - User with ID: 8 successfully logged out - IP: 192.168.1.231
 2024-07-22 12:12:06,974 - sessions - INFO - User with ID: 8 has logged-in from IP: 192.168.1.231
+2024-07-22 12:54:13,783 - sessions - INFO - User with ID: 8 has logged-in from IP: 192.168.1.231
+2024-07-22 12:54:16,595 - sessions - INFO - User with ID: 8 has logged-in from IP: 192.168.1.231
+2024-07-22 12:54:33,195 - sessions - INFO - User with ID: 8 successfully logged out - IP: 192.168.1.231
+2024-07-22 12:54:46,232 - sessions - INFO - User with ID: 8 has logged-in from IP: 192.168.1.231
+2024-07-22 12:54:47,825 - sessions - INFO - User with ID: 8 has logged-in from IP: 192.168.1.231
+2024-07-22 12:54:58,749 - sessions - INFO - User with ID: 7 has logged-in from IP: 192.168.1.231
+2024-07-22 12:55:03,730 - sessions - INFO - User with ID: 8 successfully logged out - IP: 192.168.1.231
+2024-07-22 12:55:08,432 - sessions - INFO - User with ID: 7 successfully logged out - IP: 192.168.1.231
+2024-07-22 12:55:47,424 - sessions - INFO - User with ID: 1 successfully logged out - IP: 192.168.1.231
+2024-07-22 12:57:08,646 - sessions - WARNING - Unauthorized GET request from IP: 192.168.1.231

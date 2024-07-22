@@ -30,6 +30,7 @@ class User(BaseModel):
         session = headers.get("SESSION")
         token = headers.get("TOKEN")
 
+        IP = get_ip()
         from Models.Session import Sessions
 
         is_session = Sessions.check_session(session)
@@ -38,9 +39,10 @@ class User(BaseModel):
         if not is_session or not is_token:
             resp.status = falcon.HTTP_401
             resp.body = "You have no authority to do so"
+            s_logger.warning(f"Unauthorized GET request from IP: {IP}")
+            r_logger.warning(f"Unauthorized GET request from IP: {IP}")
             return
 
-        IP = get_ip()
 
         id = req.get_param('ID')
         user_list = []
@@ -64,10 +66,7 @@ class User(BaseModel):
 
         resp.body = json.dumps(user_list)
 
-        r_logger.info("Device with IP: " + str(IP) + " has accessed users")
-
-
-
+        r_logger.info(f"Device with IP: {IP} has accessed users")
 
 
 
@@ -75,6 +74,7 @@ class User(BaseModel):
 
     def on_post(self, req, resp):
 
+        IP = get_ip()
         
         headers = req.headers
 
@@ -89,6 +89,8 @@ class User(BaseModel):
         if not is_session or not is_token:
             resp.status = falcon.HTTP_401
             resp.body = "You have no authority to do so"
+            s_logger.warning(f"Unauthorized GET request from IP: {IP}")
+            r_logger.warning(f"Unauthorized GET request from IP: {IP}")
             return
 
         id = req.get_param('ID')
@@ -97,7 +99,7 @@ class User(BaseModel):
 
             resp.status = falcon.HTTP_400
             resp.body = json.dumps({"error": "ID field required"})
-            e_logger.error("Attempted creating user with no ID -> ID = " + str(id))
+            e_logger.error(f"Attempted creating user with no ID -> ID = {id}")
 
         else:
 
@@ -116,11 +118,14 @@ class User(BaseModel):
             except IntegrityError:
                 resp.status = falcon.HTTP_409
                 resp.body = json.dumps({"error": "User already exists"})
-                e_logger.error("Attempted to create user with already existing ID -> ID = " + str(id))
+                e_logger.error(f"Attempted to create user with already existing ID -> ID: {id}, IP: {IP}")
+                r_logger.error(f"Attempted to create user with already existing ID -> ID: {id}, IP: {IP}")
 
 
     def on_delete(self, req, resp):
-        
+
+        IP = get_ip()
+
         headers = req.headers
 
         session = headers.get("SESSION")
@@ -134,6 +139,8 @@ class User(BaseModel):
         if not is_session or not is_token:
             resp.status = falcon.HTTP_401
             resp.body = "You have no authority to do so"
+            s_logger.warning(f"Unauthorized GET request from IP: {IP}")
+            r_logger.warning(f"Unauthorized GET request from IP: {IP}")
             return
 
         id = req.get_param('ID')
@@ -178,6 +185,7 @@ class User(BaseModel):
                 resp.status = falcon.HTTP_409
                 resp.body = json.dumps({"error": "User does not exist"})
                 e_logger.error("Attempted to delete non-existing user")
+                r_logger.error("Attempted to delete non-existing user")
 
 
 

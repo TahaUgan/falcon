@@ -68,6 +68,8 @@ class Login(BaseModel):
         
         user.session = new_session_code
         user.save()
+
+        
          
         resp.status = falcon.HTTP_200
         resp.body = json.dumps({"Session_Code: ": new_session_code})
