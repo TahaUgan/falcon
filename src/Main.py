@@ -3,6 +3,7 @@ from Models.User import User
 from Models.Device import Device
 from Models.Room import Room
 from Models.Log_In_Out import Login, Logout
+from Models.Company import Company
 
 import falcon
 
@@ -31,6 +32,8 @@ app.add_route('/login', login_resource)
 logout_resource = Logout()
 app.add_route('/logout', logout_resource)
 
+company_resource = Company()
+app.add_route('/companies', company_resource)
 
  
 
