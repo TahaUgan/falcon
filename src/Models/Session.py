@@ -4,8 +4,6 @@ from Models.BaseModel import BaseModel
 
 from peewee import *
 
-
-
 import random
 import string
 

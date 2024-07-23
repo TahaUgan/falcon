@@ -8,6 +8,7 @@ from Models.Session import Sessions
 from datetime import datetime
 from peewee import *
 
+
 import random
 import string
 import json
@@ -179,7 +180,10 @@ class Logout(BaseModel):
             session_to_remove = Sessions.get(Sessions.Session_Code == session_code_to_remove)
 
             session_to_remove.delete_instance()
-            
+        except DoesNotExist as dne:
+            e_logger.error(f"Attempted to delete a non-existing session, attempted session: {session_code_to_remove}, from IP: {ip}")        
+
+
         except Exception as e:
             e_logger.warning(f"Error while deleting session: {session_code_to_remove} --> {e}")
 
