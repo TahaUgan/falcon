@@ -32,7 +32,7 @@ logout_resource = Logout()
 app.add_route('/logout', logout_resource)
 
 
-
+ 
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
