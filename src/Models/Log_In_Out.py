@@ -14,7 +14,7 @@ class Login(BaseModel):
         on_login(User, req, resp)
 
 class Logout(BaseModel):
-
+ 
     def on_post(self, req, resp):
 
         on_logout(User, req, resp)
