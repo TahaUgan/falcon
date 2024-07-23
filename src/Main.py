@@ -40,7 +40,7 @@ app.add_route('/company/{companyID}/plants', company_resource, suffix = "plants"
 plant_resource = Plant()
 app.add_route('/plants', plant_resource)
 
- 
+
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
