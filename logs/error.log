@@ -18,3 +18,4 @@
 2024-07-22 12:55:47,424 - errors - WARNING - Error while deleting session: GEDdC7svqsW3JcsQ --> <Model: Sessions> instance matching query does not exist:
 SQL: SELECT `t1`.`Session_Code`, `t1`.`End_Date`, `t1`.`user_ID` FROM `sessions` AS `t1` WHERE (`t1`.`Session_Code` = %s) LIMIT %s OFFSET %s
 Params: ['GEDdC7svqsW3JcsQ', 1, 0]
+2024-07-23 14:52:11,203 - errors - ERROR - GET /companies => reduce() of empty iterable with no initial value

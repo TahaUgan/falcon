@@ -4,6 +4,7 @@ from Models.Device import Device
 from Models.Room import Room
 from Models.Log_In_Out import Login, Logout
 from Models.Company import Company
+from Models.Plant import Plant
 
 import falcon
 
@@ -34,6 +35,10 @@ app.add_route('/logout', logout_resource)
 
 company_resource = Company()
 app.add_route('/companies', company_resource)
+app.add_route('/company/{companyID}/plants', company_resource, suffix = "plants")
+
+plant_resource = Plant()
+app.add_route('/plants', plant_resource)
 
  
 
