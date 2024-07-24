@@ -5,6 +5,9 @@ from Models.Room import Room
 from Models.Log_In_Out import Login, Logout
 from Models.Company import Company
 from Models.Plant import Plant
+from Models.Place import Place
+from Models.Anchor import Anchor
+
 
 import falcon
 
@@ -18,10 +21,8 @@ app = falcon.App()
 
 user_resource = User()
 app.add_route('/users', user_resource)
+app.add_route('/users/{userID}/anchors', user_resource, suffix = 'anchors')
 
-room_resource = Room()
-app.add_route('/rooms', room_resource)
-app.add_route('/rooms/{room_ID}/users', room_resource, suffix = 'users')
 
 
 device_resource = Device()
@@ -40,6 +41,20 @@ app.add_route('/companies/{companyID}/plants', company_resource, suffix = "plant
 plant_resource = Plant()
 app.add_route('/plants', plant_resource)
 app.add_route('/plants/{plantID}/servers', plant_resource, suffix='servers')
+
+place_resource = Place()
+app.add_route('/places', place_resource)
+app.add_route('/places/{placeID}/rooms', place_resource, suffix='rooms')
+
+room_resource = Room()
+app.add_route('/rooms', room_resource)
+app.add_route('/rooms/{room_ID}/users', room_resource, suffix = 'users')
+
+anchor_resource = Anchor()
+app.add_route('/anchors', anchor_resource)
+
+
+
 
 
 

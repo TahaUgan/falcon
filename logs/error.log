@@ -15,9 +15,6 @@
 2024-07-22 11:18:51,353 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
 2024-07-22 11:19:09,691 - errors - WARNING - Error while deleting session: vWfqHBlbqg1DN8nI --> '>' not supported between instances of 'User' and 'int'
 2024-07-22 12:08:08,016 - errors - WARNING - User with ID: 9 has tried to log out while not logged-in. - IP: 192.168.1.231
-2024-07-22 12:55:47,424 - errors - WARNING - Error while deleting session: GEDdC7svqsW3JcsQ --> <Model: Sessions> instance matching query does not exist:
-SQL: SELECT `t1`.`Session_Code`, `t1`.`End_Date`, `t1`.`user_ID` FROM `sessions` AS `t1` WHERE (`t1`.`Session_Code` = %s) LIMIT %s OFFSET %s
-Params: ['GEDdC7svqsW3JcsQ', 1, 0]
 2024-07-23 14:52:11,203 - errors - ERROR - GET /companies => reduce() of empty iterable with no initial value
 2024-07-24 14:06:21,202 - errors - ERROR - Missing authenticative data
 2024-07-24 14:08:12,809 - errors - ERROR - search for not existing server from IP: 192.168.241.137
@@ -27,3 +24,5 @@ Params: ['GEDdC7svqsW3JcsQ', 1, 0]
 2024-07-24 14:09:17,398 - errors - ERROR - search for not existing server from IP: 192.168.241.137
 2024-07-24 14:10:21,897 - errors - ERROR - search for not existing server from IP: 192.168.241.137
 2024-07-24 14:10:58,502 - errors - ERROR - search for not existing server from IP: 192.168.241.137
+2024-07-24 15:25:15,181 - errors - ERROR - Missing authenticative data
+2024-07-24 15:26:54,596 - errors - ERROR - Missing authenticative data

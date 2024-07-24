@@ -16,12 +16,15 @@ import json
 
 class User(BaseModel):
 
+    from Models.Company import Company
+
     user_ID = IntegerField(primary_key=True)
     username = CharField(unique=True)
     email = CharField()
     password = CharField()
     session = CharField()
     device =ForeignKeyField(Device,db_column='device_ID', backref='users')
+    Company_ID = ForeignKeyField(Company, db_column = 'Company_ID', backref='users')
 
     def on_get(self, req, resp):
 
@@ -187,7 +190,36 @@ class User(BaseModel):
                 e_logger.error("Attempted to delete non-existing user")
                 r_logger.error("Attempted to delete non-existing user")
 
+    def on_get_anchors(self, req, resp, userID):
 
+        from Models.Anchor import Anchor
+        from Models.Room import Room
+        from Models.Plant import Plant
+        from Models.Place import Place
+        from Models.Company import Company
+        from Models.Server import Server
+
+        query = (
+            Anchor
+            .select(
+            Anchor.Anchor_ID,
+            Anchor.Anchor_Name,  # Add other Anchor fields as needed
+            Anchor.Anchor_Status,
+            Anchor.Room_ID
+        )
+        .join(Room, on=(Anchor.Room_ID == Room.room_ID))
+        .join(Place, on=(Room.Place_ID == Place.Place_ID))
+        .join(Plant, on=(Place.Plant_ID == Plant.plant_ID))
+        .join(Server, on=(Plant.server_ID == Server.server_ID))
+        .join(Company, on=(Plant.company_ID == Company.Company_ID))
+        .join(User, on=(Company.Company_ID == User.Company_ID))
+        .where(User.user_ID == userID)
+        )
+
+        users = [user for user in query.dicts()]
+
+        resp.body = json.dumps(users)
+        
 
 
 
@@ -224,4 +256,7 @@ class User(BaseModel):
 
         session_code = ''.join(random.choices(string.ascii_letters + string.digits, k = N))
         return session_code
+
+
+
 

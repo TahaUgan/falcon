@@ -185,7 +185,7 @@ class Logout(BaseModel):
 
 
         except Exception as e:
-            e_logger.warning(f"Error while deleting session: {session_code_to_remove} --> {e}")
+            e_logger.warning(f"Error while deleting session: {session_code_to_remove} from IP: {get_ip()}")
 
     
         

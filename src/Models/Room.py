@@ -2,6 +2,7 @@ from peewee import *
 from Models.BaseModel import BaseModel
 from Models.Loggers import e_logger, s_logger
 from Models.GetIP import get_ip
+from Models.Place import Place
 
 import falcon
 import json
@@ -12,50 +13,60 @@ import json
 class Room(BaseModel):
 
     room_ID = IntegerField(primary_key=True)
-    name = CharField()
+    room_Name = CharField()
+    Place_ID = ForeignKeyField(Place, db_column = 'Place_ID', backref='rooms')
 
     def on_get(self, req, resp):
-
-        
         
         headers = req.headers
 
+        id = headers.get("ID")
+        name = headers.get("NAME")
+        placeID = headers.get("PLACE_ID")
         session = headers.get("SESSION")
         token = headers.get("TOKEN")
+
 
         from Models.Session import Sessions
         from Models.Token import Token
 
-        is_session = Sessions.check_session(session)
-        is_token = Token.check_token(token)
-
-        if not is_session or not is_token:
-            resp.status = falcon.HTTP_401
-            resp.body = "You have no authority to do so"
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
             return
-    
-
-        id = req.get_param('ID')
-        room_list = []
-
+        from Models.Session import Sessions
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
 
         filters = []
 
-        if(not id):
-            rooms = Room.select()
-        else:
+        if id:
             filters.append(Room.room_ID == id)
+        if name:
+            filters.append(Room.room_Name == name)
+        if placeID:
+            filters.append(Room.Place_ID == placeID)
 
-            name = req.get_param('name')
+        if filters:
+            rooms = Room.select().where(*filters)
+        else:
+            rooms = Room.select()
 
-            if(name):
-                filters.append(Room.name == name)
 
-            rooms = Room.select().where(filters)
+        rooms = [room for room in rooms.dicts()]
 
-        rooms = list(rooms.dicts())
-
+        resp.status = falcon.HTTP_200
         resp.body = json.dumps(rooms)
+
+
+        
+
+
+
 
 
     

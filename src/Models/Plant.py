@@ -2,7 +2,7 @@
 from Models.Company import Company
 from Models.BaseModel import BaseModel
 from Models.Token import Token
-from Models.Session import Sessions
+
 from Models.Loggers import e_logger, s_logger, r_logger
 from Models.Server import Server
 from Models.GetIP import get_ip
@@ -36,6 +36,13 @@ class Plant(BaseModel):
             resp.status = falcon.HTTP_400
             resp.body = json.dumps({"error": "Missing authenticative data"})
             e_logger.error("Missing authenticative data")
+            return
+        
+        from Models.Session import Sessions
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
             return
         
         filters = []
@@ -79,6 +86,13 @@ class Plant(BaseModel):
             resp.body = json.dumps({"error": "Missing authenticative data"})
             e_logger.error("Missing authenticative data")
             return       
+        
+        from Models.Session import Sessions
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
         
         plant = Plant.get(Plant.plant_ID == plantID)
         serverID = plant.server_ID

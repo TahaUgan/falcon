@@ -1,7 +1,6 @@
 
 from Models.BaseModel import BaseModel
 from Models.Token import Token
-from Models.Session import Sessions
 from Models.Loggers import e_logger, s_logger, r_logger
 
 from peewee import *
@@ -27,7 +26,7 @@ class Company(BaseModel):
             resp.body = json.dumps({"error": "Missing authenticative data"})
             e_logger.error("Missing authenticative data")
             return
-        
+        from Models.Session import Sessions
         if not Token.check_token(token) or not Sessions.check_session(session):
             resp.status = falcon.HTTP_401
             resp.body = json.dumps({"error": "You don't have the authority to do so"})
@@ -57,6 +56,26 @@ class Company(BaseModel):
 
     def on_get_plants(self, req, resp ,companyID):
         
+
+        headers = req.headers
+        
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
+
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return
+        from Models.Session import Sessions
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
+
+
+
         from Models.Plant import Plant
         plants = Plant.select(Plant).where(Plant.company_ID == companyID)
 
