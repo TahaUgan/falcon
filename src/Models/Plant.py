@@ -5,6 +5,7 @@ from Models.Token import Token
 from Models.Session import Sessions
 from Models.Loggers import e_logger, s_logger, r_logger
 from Models.Server import Server
+from Models.GetIP import get_ip
 
 from peewee import *
 
@@ -60,3 +61,48 @@ class Plant(BaseModel):
 
         resp.status = falcon.HTTP_200
         resp.body = json.dumps(plants)
+
+
+
+
+
+    def on_get_servers(self, req, resp, plantID):
+
+        headers = req.headers
+
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
+
+
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return       
+        
+        plant = Plant.get(Plant.plant_ID == plantID)
+        serverID = plant.server_ID
+
+        
+        
+
+        try:
+
+            servers = Server.select().where(Server.server_ID == serverID)
+
+            server = [server for server in servers.dicts()]
+
+        except DoesNotExist as dne:
+            resp.status = falcon.HTTP_501
+            resp.body = "This plant does not have any Server installed"
+            e_logger.error(f"search for not existing server from IP: {get_ip()}")
+            print(dne)
+            return
+
+        
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(server)
+
+
+        
+    

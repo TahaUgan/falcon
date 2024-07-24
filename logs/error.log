@@ -19,3 +19,11 @@
 SQL: SELECT `t1`.`Session_Code`, `t1`.`End_Date`, `t1`.`user_ID` FROM `sessions` AS `t1` WHERE (`t1`.`Session_Code` = %s) LIMIT %s OFFSET %s
 Params: ['GEDdC7svqsW3JcsQ', 1, 0]
 2024-07-23 14:52:11,203 - errors - ERROR - GET /companies => reduce() of empty iterable with no initial value
+2024-07-24 14:06:21,202 - errors - ERROR - Missing authenticative data
+2024-07-24 14:08:12,809 - errors - ERROR - search for not existing server from IP: 192.168.241.137
+2024-07-24 14:08:14,087 - errors - ERROR - search for not existing server from IP: 192.168.241.137
+2024-07-24 14:08:20,530 - errors - ERROR - search for not existing server from IP: 192.168.241.137
+2024-07-24 14:09:09,162 - errors - ERROR - search for not existing server from IP: 192.168.241.137
+2024-07-24 14:09:17,398 - errors - ERROR - search for not existing server from IP: 192.168.241.137
+2024-07-24 14:10:21,897 - errors - ERROR - search for not existing server from IP: 192.168.241.137
+2024-07-24 14:10:58,502 - errors - ERROR - search for not existing server from IP: 192.168.241.137
