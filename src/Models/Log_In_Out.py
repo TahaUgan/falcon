@@ -1,9 +1,9 @@
 from Models.BaseModel import BaseModel
 from Models.User import User
-from Models.Loggers import e_logger, s_logger, r_logger
+from Utility.Loggers import e_logger, s_logger, r_logger
 from Models.Device import Device
 from Models.Room import Room
-from Models.GetIP import get_ip
+from Utility.GetIP import get_ip
 from Models.Session import Sessions
 from datetime import datetime
 from peewee import *
@@ -24,7 +24,7 @@ class Login(BaseModel):
         headers = req.headers
         token = headers.get("TOKEN")
           
-        from Models.Token import Token
+        from Utility.Token import Token
 
         if not Token.check_token(token):
             resp.status = falcon.HTTP_401
@@ -91,7 +91,7 @@ class Logout(BaseModel):
         
         token = headers_dict.get("TOKEN")
 
-        from Models.Token import Token
+        from Utility.Token import Token
 
         if not Token.check_token(token): #checking if token is invalid
             resp.status = falcon.HTTP_401

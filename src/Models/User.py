@@ -1,10 +1,8 @@
 from peewee import *
 from Models.BaseModel import BaseModel, db
-from Models.Loggers import e_logger, s_logger, r_logger
+from Utility.Loggers import e_logger, s_logger, r_logger
 from Models.Device import Device
-from Models.GetIP import get_ip
-from Models.Token import Token
-
+from Utility.GetIP import get_ip
 import random
 import string
 import falcon
@@ -35,6 +33,7 @@ class User(BaseModel):
 
         IP = get_ip()
         from Models.Session import Sessions
+        from Utility.Token import Token
 
         is_session = Sessions.check_session(session)
         is_token = Token.check_token(token)
@@ -85,6 +84,7 @@ class User(BaseModel):
         token = headers.get("TOKEN")
 
         from Models.Session import Sessions
+        from Utility.Token import Token
 
         is_session = Sessions.check_session(session)
         is_token = Token.check_token(token)
@@ -135,6 +135,7 @@ class User(BaseModel):
         token = headers.get("TOKEN")
 
         from Models.Session import Sessions
+        from Utility.Token import Token
 
         is_session = Sessions.check_session(session)
         is_token = Token.check_token(token)
@@ -198,12 +199,33 @@ class User(BaseModel):
         from Models.Place import Place
         from Models.Company import Company
         from Models.Server import Server
+               
+        headers = req.headers
+        
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
 
-        query = (
+        from Utility.Token import Token
+        from Models.Session import Sessions
+
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return
+        
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
+
+
+        anchors = (
             Anchor
             .select(
             Anchor.Anchor_ID,
-            Anchor.Anchor_Name,  # Add other Anchor fields as needed
+            Anchor.Anchor_Name, 
             Anchor.Anchor_Status,
             Anchor.Room_ID
         )
@@ -215,13 +237,24 @@ class User(BaseModel):
         .join(User, on=(Company.Company_ID == User.Company_ID))
         .where(User.user_ID == userID)
         )
-
-        users = [user for user in query.dicts()]
-
-        resp.body = json.dumps(users)
+        
+        anchors = [anchor for anchor in anchors.dicts()]
         
 
+        if anchors:
+            resp.status = falcon.HTTP_200
+            resp.body = json.dumps(anchors)
+            r_logger.info(f"Device with IP: {get_ip()} has accessed anchors of a specific user with ID: {userID}")
 
+        else:
+            resp.status = falcon.HTTP_400
+            resp.body = "No data found"
+            r_logger.info(f"Device with IP: {get_ip()} couldn't find any anchor with user ID: {userID}")
+            
+        
+
+    def on_get_hierarchy(self, req, resp, userID):
+        pass
 
     def assign_session(self):
 
@@ -252,10 +285,10 @@ class User(BaseModel):
 
     
 
-    def generate_code(N):
+def generate_code(N):
 
-        session_code = ''.join(random.choices(string.ascii_letters + string.digits, k = N))
-        return session_code
+    session_code = ''.join(random.choices(string.ascii_letters + string.digits, k = N))
+    return session_code
 
 
 

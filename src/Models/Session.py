@@ -1,5 +1,5 @@
 from Models.User import User
-from Models.Loggers import e_logger, s_logger, r_logger
+from Utility.Loggers import e_logger, s_logger, r_logger
 from Models.BaseModel import BaseModel
 
 from peewee import *

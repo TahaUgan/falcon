@@ -1,7 +1,8 @@
 from peewee import *
 from Models.BaseModel import BaseModel
-from Models.Loggers import e_logger, s_logger
-from Models.GetIP import get_ip
+from Utility.Loggers import e_logger, s_logger
+
+from Utility.GetIP import get_ip
 from Models.Place import Place
 
 import falcon
@@ -28,7 +29,7 @@ class Room(BaseModel):
 
 
         from Models.Session import Sessions
-        from Models.Token import Token
+        from Utility.Token import Token
 
         if not token or not session:
             resp.status = falcon.HTTP_400
@@ -82,7 +83,7 @@ class Room(BaseModel):
         token = headers.get("TOKEN")
 
         from Models.Session import Sessions
-        from Models.Token import Token
+        from Utility.Token import Token
 
         is_session = Sessions.check_session(session)
         is_token = Token.check_token(token)
@@ -124,7 +125,7 @@ class Room(BaseModel):
         token = headers.get("TOKEN")
 
         from Models.Session import Sessions
-        from Models.Token import Token
+        from Utility.Token import Token
 
         is_session = Sessions.check_session(session)
         is_token = Token.check_token(token)
@@ -162,54 +163,54 @@ class Room(BaseModel):
 
 
 
-    def on_delete(self, req, resp):
+    # def on_delete(self, req, resp):
          
-        headers = req.headers
+    #     headers = req.headers
 
-        session = headers.get("SESSION")
-        token = headers.get("TOKEN")
+    #     session = headers.get("SESSION")
+    #     token = headers.get("TOKEN")
 
-        from Models.Session import Sessions
-        from Models.Token import Token
+    #     from Models.Session import Sessions
+    #     from Utility.Token import Token
 
-        is_session = Sessions.check_session(session)
-        is_token = Token.check_token(token)
+    #     is_session = Sessions.check_session(session)
+    #     is_token = Token.check_token(token)
 
-        if not is_session or not is_token:
-            resp.status = falcon.HTTP_401
-            resp.body = "You have no authority to do so"
-            return
+    #     if not is_session or not is_token:
+    #         resp.status = falcon.HTTP_401
+    #         resp.body = "You have no authority to do so"
+    #         return
     
         
-        id = req.get_param('ID')
+    #     id = req.get_param('ID')
 
-        filters = []
+    #     filters = []
 
-        if(not id):
+    #     if(not id):
 
-            resp.status = falcon.HTTP_400
-            resp.body = json.dumps({"error": "ID field required"})
-            e_logger.error("Attempted deleting room with no ID -> ID = " + str(id))
+    #         resp.status = falcon.HTTP_400
+    #         resp.body = json.dumps({"error": "ID field required"})
+    #         e_logger.error("Attempted deleting room with no ID -> ID = " + str(id))
 
-        else:
+    #     else:
 
-            filters.append(Room.ID == id)
+    #         filters.append(Room.ID == id)
 
-            name = req.get_param('name')
+    #         name = req.get_param('name')
 
-            if(name):
-                filters.append(Room.name == name)
+    #         if(name):
+    #             filters.append(Room.name == name)
 
-            try:
-                Room.delete().where(filters).execute()
+    #         try:
+    #             Room.delete().where(filters).execute()
 
-                resp.status = falcon.HTTP_200
+    #             resp.status = falcon.HTTP_200
 
-            except IntegrityError:
+    #         except IntegrityError:
 
-                resp.status = falcon.HTTP_204
-                resp.body = json.dumps({"error": "Room Not Found"})
-                e_logger.error("Attempted delete non-existing room")
+    #             resp.status = falcon.HTTP_204
+    #             resp.body = json.dumps({"error": "Room Not Found"})
+    #             e_logger.error("Attempted delete non-existing room")
 
 
 

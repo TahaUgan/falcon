@@ -1,8 +1,8 @@
 from peewee import *
 from Models.BaseModel import BaseModel
 from Models.Room import Room
-from Models.GetIP import get_ip
-from Models.Loggers import e_logger, s_logger
+from Utility.GetIP import get_ip
+from Utility.Loggers import e_logger, s_logger
 
 import falcon
 import json
@@ -24,7 +24,7 @@ class Device(BaseModel):
         token = headers.get("TOKEN")
 
         from Models.Session import Sessions
-        from Models.Token import Token
+        from Utility.Token import Token
 
         is_session = Sessions.check_session(session)
         is_token = Token.check_token(token)
@@ -87,7 +87,7 @@ class Device(BaseModel):
         token = headers.get("TOKEN")
 
         from Models.Session import Sessions
-        from Models.Token import Token
+        from Utility.Token import Token
 
         is_session = Sessions.check_session(session)
         is_token = Token.check_token(token)
@@ -135,7 +135,7 @@ class Device(BaseModel):
         token = headers.get("TOKEN")
 
         from Models.Session import Sessions
-        from Models.Token import Token
+        from Utility.Token import Token
 
         is_session = Sessions.check_session(session)
         is_token = Token.check_token(token)

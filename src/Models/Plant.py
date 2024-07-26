@@ -1,12 +1,11 @@
 
 from Models.Company import Company
 from Models.BaseModel import BaseModel
-from Models.Token import Token
+from Utility.Token import Token
 
-from Models.Loggers import e_logger, s_logger, r_logger
+from Utility.Loggers import e_logger, s_logger, r_logger
 from Models.Server import Server
-from Models.GetIP import get_ip
-
+from Utility.GetIP import get_ip
 from peewee import *
 
 import falcon
@@ -88,6 +87,7 @@ class Plant(BaseModel):
             return       
         
         from Models.Session import Sessions
+
         if not Token.check_token(token) or not Sessions.check_session(session):
             resp.status = falcon.HTTP_401
             resp.body = json.dumps({"error": "You don't have the authority to do so"})
@@ -110,7 +110,6 @@ class Plant(BaseModel):
             resp.status = falcon.HTTP_501
             resp.body = "This plant does not have any Server installed"
             e_logger.error(f"search for not existing server from IP: {get_ip()}")
-            print(dne)
             return
 
         

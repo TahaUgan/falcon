@@ -22,3 +22,21 @@
 2024-07-23 11:12:32,825 - requests - WARNING - Unauthorized GET request from IP: 192.168.241.137
 2024-07-23 11:26:01,366 - requests - WARNING - Unauthorized GET request from IP: 192.168.241.137
 2024-07-24 14:20:25,211 - requests - WARNING - Unauthorized GET request from IP: 192.168.241.137
+2024-07-26 09:00:30,136 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-26 09:09:54,590 - requests - WARNING - Unauthorized GET request from IP: 192.168.1.231
+2024-07-26 09:24:03,434 - requests - WARNING - Unauthorized GET request from IP: 192.168.241.137
+2024-07-26 09:24:03,443 - requests - WARNING - Unauthorized GET request from IP: 192.168.241.137
+2024-07-26 09:26:00,899 - requests - WARNING - Unauthorized GET request from IP: 192.168.241.137
+2024-07-26 10:01:42,404 - requests - INFO - Device with IP: 192.168.241.137 has accessed servers
+2024-07-26 10:11:51,745 - requests - INFO - Device with IP: 192.168.241.137 has accessed servers
+2024-07-26 10:17:15,194 - requests - INFO - Device with IP: 192.168.241.137 couldn't find any anchors
+2024-07-26 10:17:22,163 - requests - INFO - Device with IP: 192.168.241.137 has accessed servers
+2024-07-26 10:19:32,946 - requests - INFO - Device with IP: 192.168.241.137 has accessed servers
+2024-07-26 10:19:40,557 - requests - INFO - Device with IP: 192.168.241.137 has accessed servers
+2024-07-26 10:20:18,730 - requests - INFO - Device with IP: 192.168.241.137 has accessed anchors
+2024-07-26 12:43:59,364 - requests - WARNING - Unauthorized GET request from IP: 192.168.241.137
+2024-07-26 14:26:50,026 - requests - INFO - Device with IP: 192.168.1.231 has accessed servers
+2024-07-26 14:30:43,889 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-26 14:31:52,258 - requests - INFO - Device with IP: 192.168.1.231 has accessed users
+2024-07-26 14:36:06,137 - requests - INFO - Device with IP: 192.168.1.231 has accessed servers
+2024-07-26 14:39:28,361 - requests - INFO - Device with IP: 192.168.1.231 has accessed servers

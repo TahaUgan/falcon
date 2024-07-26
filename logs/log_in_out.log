@@ -45,3 +45,8 @@
 2024-07-23 11:12:32,825 - sessions - WARNING - Unauthorized GET request from IP: 192.168.241.137
 2024-07-23 11:26:01,365 - sessions - WARNING - Unauthorized GET request from IP: 192.168.241.137
 2024-07-24 14:20:25,210 - sessions - WARNING - Unauthorized GET request from IP: 192.168.241.137
+2024-07-26 09:09:54,590 - sessions - WARNING - Unauthorized GET request from IP: 192.168.1.231
+2024-07-26 09:24:03,434 - sessions - WARNING - Unauthorized GET request from IP: 192.168.241.137
+2024-07-26 09:24:03,442 - sessions - WARNING - Unauthorized GET request from IP: 192.168.241.137
+2024-07-26 09:26:00,899 - sessions - WARNING - Unauthorized GET request from IP: 192.168.241.137
+2024-07-26 12:43:59,364 - sessions - WARNING - Unauthorized GET request from IP: 192.168.241.137

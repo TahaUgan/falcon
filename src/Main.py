@@ -5,6 +5,7 @@ from Models.Room import Room
 from Models.Log_In_Out import Login, Logout
 from Models.Company import Company
 from Models.Plant import Plant
+from Models.Server import Server
 from Models.Place import Place
 from Models.Anchor import Anchor
 
@@ -24,7 +25,6 @@ app.add_route('/users', user_resource)
 app.add_route('/users/{userID}/anchors', user_resource, suffix = 'anchors')
 
 
-
 device_resource = Device()
 app.add_route('/devices', device_resource)
 
@@ -42,6 +42,11 @@ plant_resource = Plant()
 app.add_route('/plants', plant_resource)
 app.add_route('/plants/{plantID}/servers', plant_resource, suffix='servers')
 
+server_resource = Server()
+app.add_route('/servers', server_resource)
+app.add_route('/servers/{serverID}/anchors', server_resource, suffix= 'anchors')
+app.add_route('/servers/{serverID}/plants', server_resource, suffix='plants')
+
 place_resource = Place()
 app.add_route('/places', place_resource)
 app.add_route('/places/{placeID}/rooms', place_resource, suffix='rooms')
@@ -52,7 +57,6 @@ app.add_route('/rooms/{room_ID}/users', room_resource, suffix = 'users')
 
 anchor_resource = Anchor()
 app.add_route('/anchors', anchor_resource)
-
 
 
 
