@@ -120,7 +120,27 @@ class Anchor(BaseModel):
             e_logger.info(f"Failed anchor remove attempt, no anchor found, IP: {get_ip}")
 
 
+    def on_post():
         
+        headers = req.headers
+        
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
+
+        from Utility.Token import Token
+        from Models.Session import Sessions
+
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return
+        
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
 
 
 
