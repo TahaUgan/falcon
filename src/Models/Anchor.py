@@ -120,7 +120,7 @@ class Anchor(BaseModel):
             e_logger.info(f"Failed anchor remove attempt, no anchor found, IP: {get_ip}")
 
 
-    def on_post():
+    def on_post(self, req, resp):
         
         headers = req.headers
         
