@@ -144,11 +144,11 @@ class Place(BaseModel):
             Place.delete().where(*filters)
             resp.status = falcon.HTTP_200
             resp.body = json.dumps("Places have been removed")
-            r_logger.info(f"Places has been removed with filter: {filters[0]}, IP: {get_ip}")
+            r_logger.info(f"Places has been removed with filter: {filters[0]}, IP: {get_ip()}")
         else:
             resp.status = falcon.HTTP_400
             resp.body = "No place found with these/this filters"
-            e_logger.info(f"Failed place remove attempt, no place found, IP: {get_ip}")
+            e_logger.info(f"Failed place remove attempt, no place found, IP: {get_ip()}")
 
 
 

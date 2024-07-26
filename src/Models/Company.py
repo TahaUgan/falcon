@@ -127,6 +127,15 @@ class Company(BaseModel):
         id = headers.get("ID")
         name = headers.get("NAME")
 
+        if not id:
+            resp.status = falcon.HTTP_400
+            resp.body = "Can't delete with body"
+            return
+
+
+        from Models.Plant import Plant
+
+
         filters = []
         
         if id:
@@ -139,11 +148,11 @@ class Company(BaseModel):
             Company.delete().where(*filters)
             resp.status = falcon.HTTP_200
             resp.body = json.dumps("Company/ies has been removed")
-            r_logger.info(f"Companies has been removed with filter: {filters[0]}, IP: {get_ip}")
+            r_logger.info(f"Companies has been removed with filter: {filters[0]}, IP: {get_ip()}")
         else:
             resp.status = falcon.HTTP_400
             resp.body = "No company found with these/this filters"
-            e_logger.info(f"Failed company remove attempt, no company found, IP: {get_ip}")
+            e_logger.info(f"Failed company remove attempt, no company found, IP: {get_ip()}")
 
 
         

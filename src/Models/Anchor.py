@@ -25,10 +25,6 @@ class Anchor(BaseModel):
                
         headers = req.headers
         
-        id = headers.get("ID")
-        name = headers.get("NAME")
-        roomID = headers.get("ROOM_ID")
-        status = headers.get("STATUS")
 
         token = headers.get("TOKEN")
         session = headers.get("SESSION")
@@ -44,6 +40,12 @@ class Anchor(BaseModel):
             resp.body = json.dumps({"error": "You don't have the authority to do so"})
             e_logger.error("Unauthorized access attempt")
             return
+      
+      
+        id = headers.get("ID")
+        name = headers.get("NAME")
+        roomID = headers.get("ROOM_ID")
+        status = headers.get("STATUS")
         
         filters = []
         
@@ -113,11 +115,11 @@ class Anchor(BaseModel):
             Anchor.delete().where(*filters)
             resp.status = falcon.HTTP_200
             resp.body = json.dumps("Anchors have been removed")
-            r_logger.info(f"anchors has been removed with filter: {filters[0]}, IP: {get_ip}")
+            r_logger.info(f"anchors has been removed with filter: {filters[0]}, IP: {get_ip()}")
         else:
             resp.status = falcon.HTTP_400
             resp.body = "No anchor found with these/this filters"
-            e_logger.info(f"Failed anchor remove attempt, no anchor found, IP: {get_ip}")
+            e_logger.info(f"Failed anchor remove attempt, no anchor found, IP: {get_ip()}")
 
 
     def on_post(self, req, resp):
@@ -141,6 +143,33 @@ class Anchor(BaseModel):
             resp.body = json.dumps({"error": "You don't have the authority to do so"})
             e_logger.error("Unauthorized access attempt")
             return
+
+
+        id = headers.get("ID")
+        name = headers.get("NAME")
+        roomID = headers.get("ROOM_ID")
+        status = headers.get("STATUS")
+
+        if not id:
+            resp.status = falcon.HTTP_206
+            resp.body = "Anchor must have an ID"
+            e_logger.error(f"Attempted creating anchor with no ID, IP: {get_ip()}")
+        
+        filters = []
+        
+        if id:
+            filters.append(Anchor_ID = id)
+        if name:
+            filters.append(Anchor_Name = name)
+        if roomID:
+            filters.append(Room_ID = roomID)
+        if status:
+            filters.append(Anchor_Status = status)
+
+        anchor = Anchor.create(*filters)
+
+        anchor.save()
+
 
 
 
