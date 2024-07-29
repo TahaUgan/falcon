@@ -36,7 +36,8 @@ app.add_route('/logout', logout_resource)
 
 company_resource = Company()
 app.add_route('/companies', company_resource)
-app.add_route('/companies/{companyID}/plants', company_resource, suffix = "plants")
+app.add_route('/companies/{companyID}/plants', company_resource, suffix = 'plants')
+app.add_route('/companies/{companyID}/migration', company_resource, suffix='migrate')
 
 plant_resource = Plant()
 app.add_route('/plants', plant_resource)

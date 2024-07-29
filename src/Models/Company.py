@@ -2,6 +2,7 @@
 from Models.BaseModel import BaseModel
 from Utility.Loggers import e_logger, s_logger, r_logger
 from Models.User import *
+from Utility.GetIP import get_ip
 
 
 from peewee import *
@@ -145,7 +146,18 @@ class Company(BaseModel):
 
 
         if filters:
-            Company.delete().where(*filters)
+            
+            companies = Company.select().where(*filters)
+
+            if not companies:
+                resp.status = falcon.HTTP_400
+                resp.body = f"This Company does not exist"
+                e_logger.error(f"Attempt on deleting inexistant company, from IP: {get_ip()}")
+                return
+
+            for company in companies:
+                company.delete_instance()
+
             resp.status = falcon.HTTP_200
             resp.body = json.dumps("Company/ies has been removed")
             r_logger.info(f"Companies has been removed with filter: {filters[0]}, IP: {get_ip()}")
@@ -156,3 +168,88 @@ class Company(BaseModel):
 
 
         
+    def on_post_migrate(self, req, resp, companyID):
+        
+        headers = req.headers
+        
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
+
+        from Utility.Token import Token
+        from Models.Session import Sessions
+
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return
+        
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
+        
+
+        from Models.Histories.Plant_history import Plant_history
+        
+        from Models.Plant import Plant
+
+        try:
+
+            plant_histories = Plant_history.select().where(Plant_history.Company_ID == companyID, Plant_history.Is_Last == 'Last').order_by(Plant_history.Change_Date.desc())
+
+        except DoesNotExist as dne:
+            resp.status = falcon.HTTP_400
+            resp.body = "No Such record has found"
+            e_logger.error(f"Migration attempt with non-existing plant record, IP: {get_ip()}")
+            return
+
+        newCompID = headers.get("COMPANYID")
+        newCompName = headers.get("COMPANYNAME")
+
+        for plant_history in plant_histories:
+
+            target_plant_ID = plant_history.Plant_ID
+
+            try:
+
+                plant = Plant.select().where(Plant.plant_ID == target_plant_ID).get()
+
+            except DoesNotExist as dne:
+                resp.status = falcon.HTTP_400
+                resp.body = "This plant may have been deleted"
+                e_logger.error(f"Record exists but plant does not, plantID: {target_plant_ID}, IP: {get_ip()}")
+                return
+
+            if plant.Company_ID: #means that, this plant is in use already
+                resp.status = falcon.HTTP_226
+                resp.body = "This plant already has a Company that it is connected to"
+                e_logger.error(f"Tried to assing a in-use plant to a cmopany")
+                return
+
+            if not newCompID:
+                resp.status = falcon.HTTP_400
+                resp.body = f"Missing new Company ID"
+                e_logger.error(f"Attempt on creating a new company without new Company ID, ID: {newCompID}")
+                return
+
+            try:
+
+                company_to_create = Company.create(Company_ID = newCompID, Company_Name = newCompName)
+                company_to_create.save()
+    
+            except BaseException:
+                print("+1")
+            
+            
+    
+            plant.Company_ID = newCompID
+            plant.save()
+
+
+        resp.status = falcon.HTTP_201
+        resp.body = f"New company with ID: {newCompID} has been created"
+
+
+

@@ -117,5 +117,71 @@ class Plant(BaseModel):
         resp.body = json.dumps(server)
 
 
-        
+    def on_delete(self, req, resp):
     
+        headers = req.headers
+
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
+
+        from Utility.Token import Token
+        from Models.Session import Sessions
+
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return
+
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
+
+        id = headers.get("ID")
+        name = headers.get("NAME")
+
+        if not id:
+            resp.status = falcon.HTTP_400
+            resp.body = "Can't delete with body"
+            return
+
+        from Models.Plant import Plant
+        from Models.Place import Place
+        from Models.Server import Server
+
+        filters = []
+
+        if id:
+            filters.append(Plant.plant_ID == id)
+        if name:
+            filters.append(Plant.plant_Name == name)
+
+        if filters:
+            plants = Plant.select().where(*filters)
+
+            if not plants:
+                resp.status = falcon.HTTP_400
+                resp.body = f"This Plant does not exist"
+                e_logger.error(f"Attempt on deleting inexistant plant, from IP: {get_ip()}")
+                return
+
+            for plant in plants:
+                # Delete associated places
+                places = Place.select().where(Place.Plant_ID == plant.plant_ID)
+                for place in places:
+                    # Delete associated servers for each place
+                    place.plant_ID = None
+                    place.save()            
+                    
+                plant.delete_instance()
+
+            resp.status = falcon.HTTP_200
+            resp.body = json.dumps("Plant/ies, associated places, and servers have been removed")
+            r_logger.info(f"Plants, associated places, and servers have been removed with filter: {filters[0]}, IP: {get_ip()}")
+        else:
+            resp.status = falcon.HTTP_400
+            resp.body = "No plant found with these/this filters"
+            e_logger.info(f"Failed plant remove attempt, no plant found, IP: {get_ip()}")
+

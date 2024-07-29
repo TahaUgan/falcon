@@ -31,3 +31,15 @@
 2024-07-26 09:09:56,491 - errors - ERROR - Missing authenticative data
 2024-07-26 09:22:02,906 - errors - ERROR - Missing authenticative data
 2024-07-26 11:03:07,272 - errors - ERROR - Missing authenticative data
+2024-07-29 10:29:06,641 - errors - ERROR - Attempt on creating a new company without new Company ID
+2024-07-29 10:29:45,182 - errors - ERROR - Attempt on creating a new company without new Company ID
+2024-07-29 10:30:42,935 - errors - ERROR - Attempt on creating a new company without new Company ID, ID: None
+2024-07-29 10:31:08,678 - errors - ERROR - Attempt on creating a new company without new Company ID, ID: None
+2024-07-29 10:31:11,714 - errors - ERROR - Attempt on creating a new company without new Company ID, ID: None
+2024-07-29 10:31:44,414 - errors - ERROR - Attempt on creating a new company without new Company ID, ID: None
+2024-07-29 10:32:46,311 - errors - ERROR - Attempt on creating a new company without new Company ID, ID: None
+2024-07-29 10:39:46,761 - errors - ERROR - Tried to assing a in-use plant to a cmopany
+2024-07-29 10:39:53,365 - errors - ERROR - Attempt on deleting inexistant company, from IP: 192.168.1.231
+2024-07-29 10:42:31,975 - errors - ERROR - Attempt on deleting inexistant company, from IP: 192.168.1.231
+2024-07-29 10:43:46,853 - errors - ERROR - Tried to assing a in-use plant to a cmopany
+2024-07-29 10:43:52,391 - errors - ERROR - Attempt on deleting inexistant company, from IP: 192.168.1.231
