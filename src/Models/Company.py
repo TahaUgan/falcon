@@ -189,24 +189,35 @@ class Company(BaseModel):
             resp.body = json.dumps({"error": "You don't have the authority to do so"})
             e_logger.error("Unauthorized access attempt")
             return
-        
+
+        newCompID = headers.get("COMPANYID")
+        newCompName = headers.get("COMPANYNAME")
+
+        try:
+
+            company = Company.create(Company_ID = newCompID, Company_Name = newCompName)
+            company.save()
+
+        except IntegrityError as ie:
+            resp.status = falcon.HTTP_400
+            resp.body = f"This company already exists"
+            e_logger.error(f"Tried to create an existing company from IP: {get_ip()}")
+            return
+
+
 
         from Models.Histories.Plant_history import Plant_history
-        
         from Models.Plant import Plant
 
         try:
 
-            plant_histories = Plant_history.select().where(Plant_history.Company_ID == companyID, Plant_history.Is_Last == 'Last').order_by(Plant_history.Change_Date.desc())
+            plant_histories = Plant_history.select().where(Plant_history.Company_ID == companyID, Plant_history.Is_Last == 'Last')
 
         except DoesNotExist as dne:
             resp.status = falcon.HTTP_400
             resp.body = "No Such record has found"
             e_logger.error(f"Migration attempt with non-existing plant record, IP: {get_ip()}")
             return
-
-        newCompID = headers.get("COMPANYID")
-        newCompName = headers.get("COMPANYNAME")
 
         for plant_history in plant_histories:
 
@@ -234,22 +245,17 @@ class Company(BaseModel):
                 e_logger.error(f"Attempt on creating a new company without new Company ID, ID: {newCompID}")
                 return
 
-            try:
-
-                company_to_create = Company.create(Company_ID = newCompID, Company_Name = newCompName)
-                company_to_create.save()
-    
-            except BaseException:
-                print("+1")
-            
+        
             
     
             plant.Company_ID = newCompID
             plant.save()
 
 
+        
         resp.status = falcon.HTTP_201
-        resp.body = f"New company with ID: {newCompID} has been created"
+        resp.body = f"Company succesfully created"
+        r_logger.info(f"Created a company with ID: {newCompID} from IP: {get_ip()}")
 
 
 

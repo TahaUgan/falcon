@@ -43,3 +43,10 @@
 2024-07-29 10:42:31,975 - errors - ERROR - Attempt on deleting inexistant company, from IP: 192.168.1.231
 2024-07-29 10:43:46,853 - errors - ERROR - Tried to assing a in-use plant to a cmopany
 2024-07-29 10:43:52,391 - errors - ERROR - Attempt on deleting inexistant company, from IP: 192.168.1.231
+2024-07-29 12:52:15,732 - errors - ERROR - Tried to migrate to an existing company, company ID: 102, IP: 192.168.1.231
+2024-07-29 12:52:18,550 - errors - ERROR - Tried to migrate to an existing company, company ID: 102, IP: 192.168.1.231
+2024-07-29 15:06:16,634 - errors - ERROR - Tried to create an existing company from IP: 192.168.1.231
+2024-07-29 15:08:07,485 - errors - ERROR - Tried to create an existing company from IP: 192.168.1.231
+2024-07-29 15:15:35,468 - errors - ERROR - Tried to create an existing company from IP: 192.168.1.231
+2024-07-29 15:15:42,300 - errors - ERROR - Tried to create an existing company from IP: 192.168.1.231
+2024-07-29 15:16:58,467 - errors - ERROR - Missing authenticative data

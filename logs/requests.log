@@ -53,3 +53,4 @@
 2024-07-29 11:40:23,338 - requests - INFO - Companies has been removed with filter: <peewee.Expression object at 0x00000272FDF9F140>, IP: 192.168.1.231
 2024-07-29 11:42:53,641 - requests - INFO - Companies has been removed with filter: <peewee.Expression object at 0x000001A63AA1F020>, IP: 192.168.1.231
 2024-07-29 12:29:08,061 - requests - INFO - Plants, associated places, and servers have been removed with filter: <peewee.Expression object at 0x0000021ADD54AA80>, IP: 192.168.1.231
+2024-07-29 15:16:53,120 - requests - WARNING - Unauthorized GET request from IP: 192.168.1.231
