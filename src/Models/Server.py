@@ -75,12 +75,12 @@ class Server(BaseModel):
         if servers:
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(servers)
-            r_logger.info(f"Device with IP: {get_ip()} has accessed servers")
+            r_logger.info(f"Card with IP: {get_ip()} has accessed servers")
 
         else:
             resp.status = falcon.HTTP_400
             resp.body = "No data found"
-            r_logger.info(f"Device with IP: {get_ip()} couldn't find any server")
+            r_logger.info(f"Card with IP: {get_ip()} couldn't find any server")
 
 
 
@@ -128,12 +128,12 @@ class Server(BaseModel):
         if anchors:
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(anchors)
-            r_logger.info(f"Device with IP: {get_ip()} has accessed anchors")
+            r_logger.info(f"Card with IP: {get_ip()} has accessed anchors")
 
         else:
             resp.status = falcon.HTTP_400
             resp.body = "No data found"
-            r_logger.info(f"Device with IP: {get_ip()} couldn't find any anchors")
+            r_logger.info(f"Card with IP: {get_ip()} couldn't find any anchors")
 
 
     def on_get_plants(self, req, resp, serverID):
@@ -170,9 +170,9 @@ class Server(BaseModel):
         if servers:
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(servers)
-            r_logger.info(f"Device with IP: {get_ip()} has accessed servers")
+            r_logger.info(f"Card with IP: {get_ip()} has accessed servers")
 
         else:
             resp.status = falcon.HTTP_400
             resp.body = "No data found"
-            r_logger.info(f"Device with IP: {get_ip()} couldn't find any server")
+            r_logger.info(f"Card with IP: {get_ip()} couldn't find any server")

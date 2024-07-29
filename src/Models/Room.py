@@ -72,47 +72,10 @@ class Room(BaseModel):
 
     
     def on_get_users(self, req, resp, room_ID):
-        
-        from Models.Device import Device
-        from Models.User import User
-
-         
-        headers = req.headers
-
-        session = headers.get("SESSION")
-        token = headers.get("TOKEN")
-
-        from Models.Session import Sessions
-        from Utility.Token import Token
-
-        is_session = Sessions.check_session(session)
-        is_token = Token.check_token(token)
-
-        if not is_session or not is_token:
-            resp.status = falcon.HTTP_401
-            resp.body = "You have no authority to do so"
-            return
-    
-        
-
-        
-        query = (User
-         .select(User)
-         .join(Device, on=(User.device_ID == Device.device_ID))
-         .join(Room, on=(Device.room_ID == Room.room_ID))
-         .where(Room.room_ID == room_ID))
-
-
-        
-
-        result = list(query.dicts())
-
-        
-
-        resp.status = falcon.HTTP_200
-        resp.body = json.dumps(result)
-
-
+        pass
+        #TO DO
+        #use a query to get users in a room
+        # room -> anchor -> card -> user
 
 
 

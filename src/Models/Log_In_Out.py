@@ -1,7 +1,7 @@
 from Models.BaseModel import BaseModel
 from Models.User import User
 from Utility.Loggers import e_logger, s_logger, r_logger
-from Models.Device import Device
+from Models.Card import Card
 from Models.Room import Room
 from Utility.GetIP import get_ip
 from Models.Session import Sessions

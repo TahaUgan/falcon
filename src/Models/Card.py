@@ -1,6 +1,6 @@
 from peewee import *
 from Models.BaseModel import BaseModel
-from Models.Room import Room
+from Models.Anchor import Anchor
 from Utility.GetIP import get_ip
 from Utility.Loggers import e_logger, s_logger
 
@@ -9,11 +9,11 @@ import json
 
 
 
-class Device(BaseModel):
+class Card(BaseModel):
 
-    device_ID = IntegerField(primary_key=True)
-    name = CharField()
-    ID = ForeignKeyField(Room, db_column='room_ID', backref='devices')
+    Card_ID = IntegerField(primary_key=True)
+    Card_Name = CharField()
+    Anchor_ID = ForeignKeyField(Anchor, db_column='Anchor_ID', backref='cards')
 
     def on_get(self, req, resp):
 
@@ -35,40 +35,34 @@ class Device(BaseModel):
             return
     
 
-        id = req.get_param('device_ID')
-        device_list = []
+        id = req.get_param('Card_ID')
 
         filters = []
 
         if(not id):
-            devices = Device.select()
+            cards = Card.select()
         else:
-            filters.append(Device.ID == id)
+            filters.append(Card.ID == id)
 
             name = req.get_param('name')
             room_id = req.get_param('room_ID')
 
             if(name):
-                filters.append(Device.name == name)
+                filters.append(Card.name == name)
             if(room_id):
-                filters.append(Device.room_ID == room_id)
+                filters.append(Card.room_ID == room_id)
 
-            devices = Device.select().where(filters)
+            cards = Card.select().where(filters)
 
-
-        for device in devices:
-            device_data = device.__data__
-            device_tuple = tuple(device_data.values())
-            device_list.append(device_tuple)
+            cards = [card for card in cards]
 
 
-        if(len(device_list) == 0):
+        if not cards:
             resp.status = falcon.HTTP_204
-            resp.body = json.dumps("device Not Found")
+            resp.body = json.dumps("Card Not Found")
         else:
-
             resp.status = falcon.HTTP_200
-            resp.body = json.dumps(device_list)
+            resp.body = json.dumps(cards)
 
 
 
@@ -99,32 +93,32 @@ class Device(BaseModel):
     
 
 
-        id = req.get_param('device_ID')
+        id = req.get_param('Card_ID')
 
-        if(not id):
+        if not id:
 
             resp.status = falcon.HTTP_400
             resp.body = json.dumps({"error": "ID field required"})
-            e_logger.error("Attempted creating device with no ID -> ID = " + str(id))
+            e_logger.error("Attempted creating Card with no ID -> ID = " + str(id))
 
 
         else:
 
-            name = req.get_param('name')
-            roomid = req.get_param('room_ID')
+            name = req.get_param('Card_Name')
+            anchorID = req.get_param('anchor_ID')
 
 
             try:
                 from Models.User import User
-                new_user = User.create(device_ID = id, name = name, room_ID = roomid)
+                new_user = User.create(Card_ID = id, Card_Name = name, Anchor_ID = anchorID)
                 new_user.save()
 
                 resp.status = falcon.HTTP_201
-                resp.body = json.dumps("Device Created")
+                resp.body = json.dumps("Card Created")
             except IntegrityError:
                 resp.status = falcon.HTTP_409
-                resp.body = json.dumps({"error": "Device already exists"})
-                e_logger.error("Attempted to create device with already existing ID -> ID = " + str(id))
+                resp.body = json.dumps({"error": "Card already exists"})
+                e_logger.error("Attempted to create card with already existing ID -> ID = " + str(id))
 
     def on_delete(self, req, resp):
 
@@ -146,31 +140,31 @@ class Device(BaseModel):
             return
     
 
-        id = req.get_param('device_ID')
+        id = req.get_param('Card_ID')
 
         filters = []
 
-        if (not id):
+        if not id:
 
             resp.status = falcon.HTTP_400
             resp.body = json.dumps({"error": "ID field required"})
-            e_logger.error("Attempted deleting device with no ID -> ID = " + str(id))
+            e_logger.error("Attempted deleting card with no ID -> ID = " + str(id))
 
         else:
 
-            filters.append(Room.ID == id)
+            filters.append(Card.Card_ID == id)
 
-            name = req.get_param('name')
+            name = req.get_param('Card_Name')
 
-            if (name):
-                filters.append(Device.name == name)
+            if name:
+                filters.append(Card.Card_Name == name)
 
             try:
-                Device.delete().where(filters).execute()
+                Card.delete().where(filters).execute()
 
                 resp.status = falcon.HTTP_200
             except IntegrityError:
                 resp.status = falcon.HTTP_204
-                resp.body = json.dumps({"error": "Device Not Found"})
-                e_logger.error("Attempted delete non-existing device")
+                resp.body = json.dumps({"error": "Card Not Found"})
+                e_logger.error("Attempted delete non-existing card")
 

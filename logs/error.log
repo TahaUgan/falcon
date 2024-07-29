@@ -50,3 +50,4 @@
 2024-07-29 15:15:35,468 - errors - ERROR - Tried to create an existing company from IP: 192.168.1.231
 2024-07-29 15:15:42,300 - errors - ERROR - Tried to create an existing company from IP: 192.168.1.231
 2024-07-29 15:16:58,467 - errors - ERROR - Missing authenticative data
+2024-07-29 15:22:39,115 - errors - ERROR - Attempt on deleting inexistant plant, from IP: 192.168.1.231

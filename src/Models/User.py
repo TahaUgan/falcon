@@ -1,7 +1,7 @@
 from peewee import *
 from Models.BaseModel import BaseModel, db
 from Utility.Loggers import e_logger, s_logger, r_logger
-from Models.Device import Device
+from Models.Card import Card
 from Utility.GetIP import get_ip
 import random
 import string
@@ -21,7 +21,7 @@ class User(BaseModel):
     email = CharField()
     password = CharField()
     session = CharField()
-    device =ForeignKeyField(Device,db_column='device_ID', backref='users')
+    Card_ID =ForeignKeyField(Card, db_column='Card_ID', backref='users')
     Company_ID = ForeignKeyField(Company, db_column = 'Company_ID', backref='users')
 
     def on_get(self, req, resp):
@@ -68,7 +68,7 @@ class User(BaseModel):
 
         resp.body = json.dumps(user_list)
 
-        r_logger.info(f"Device with IP: {IP} has accessed users")
+        r_logger.info(f"Card with IP: {IP} has accessed users")
 
 
 
@@ -110,10 +110,10 @@ class User(BaseModel):
             password = req.get_param('password')
             email = req.get_param('email')
             session = req.get_param('session')
-            device_ID = req.get_param('device_ID')
+            Card_ID = req.get_param('Card_ID')
 
             try:
-                new_user = User.create(user_ID = id, username = username, email = email, password = password, session = session, device_ID = device_ID)
+                new_user = User.create(user_ID = id, username = username, email = email, password = password, session = session, Card_ID = Card_ID)
                 new_user.save()
 
                 resp.status = falcon.HTTP_201
@@ -159,7 +159,7 @@ class User(BaseModel):
             password = req.get_param('password')
             email = req.get_param('email')
             session = req.get_param('session')
-            device_ID = req.get_param('device_ID')
+            Card_ID = req.get_param('Card_ID')
 
 
             filter = []
@@ -174,8 +174,8 @@ class User(BaseModel):
                 filter.append(User.password == password)
             if(email):
                 filter.append(User.email == email)
-            if(device_ID):
-                filter.append(Device.device_ID == device_ID)
+            if(Card_ID):
+                filter.append(Card.Card_ID == Card_ID)
             if(session):
                 filter.append(User.session == session)
 
@@ -244,12 +244,12 @@ class User(BaseModel):
         if anchors:
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(anchors)
-            r_logger.info(f"Device with IP: {get_ip()} has accessed anchors of a specific user with ID: {userID}")
+            r_logger.info(f"Card with IP: {get_ip()} has accessed anchors of a specific user with ID: {userID}")
 
         else:
             resp.status = falcon.HTTP_400
             resp.body = "No data found"
-            r_logger.info(f"Device with IP: {get_ip()} couldn't find any anchor with user ID: {userID}")
+            r_logger.info(f"Card with IP: {get_ip()} couldn't find any anchor with user ID: {userID}")
             
         
 

@@ -1,6 +1,6 @@
 
 from Models.User import User
-from Models.Device import Device
+from Models.Card import Card
 from Models.Room import Room
 from Models.Log_In_Out import Login, Logout
 from Models.Company import Company
@@ -25,8 +25,8 @@ app.add_route('/users', user_resource)
 app.add_route('/users/{userID}/anchors', user_resource, suffix = 'anchors')
 
 
-device_resource = Device()
-app.add_route('/devices', device_resource)
+card_resource = Card()
+app.add_route('/cards', card_resource)
 
 login_resource = Login()
 app.add_route('/login', login_resource)
