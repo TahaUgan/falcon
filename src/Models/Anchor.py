@@ -1,8 +1,7 @@
 
 from Models.BaseModel import BaseModel
 from Models.Room import Room
-from Utility.Token import Token
-from Models.Session import Sessions
+
 from Utility.Loggers import e_logger, s_logger, r_logger
 from Utility.GetIP import get_ip
 
@@ -28,6 +27,9 @@ class Anchor(BaseModel):
 
         token = headers.get("TOKEN")
         session = headers.get("SESSION")
+
+        from Utility.Token import Token
+        from Models.Session import Sessions
 
         if not token or not session:
             resp.status = falcon.HTTP_400
@@ -69,6 +71,57 @@ class Anchor(BaseModel):
 
         resp.status = falcon.HTTP_200
         resp.body = json.dumps(anchors)
+
+
+    def on_get_matching_cards(self, req, resp):
+
+        headers = req.headers
+        
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
+
+        from Utility.Token import Token
+        from Models.Session import Sessions
+
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return
+        
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
+
+
+        from Models.Card import Card
+
+        anchor_card = (Anchor
+                       .select(Anchor.Anchor_ID, Card.Card_ID)
+                       .join(Card, on=(Anchor.Anchor_ID == Card.Anchor_ID))
+                       
+                    )
+        
+
+        anchor_card = [ancard for ancard in anchor_card.dicts()]
+
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(anchor_card)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     def on_delete(self, req, resp):

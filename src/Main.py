@@ -8,6 +8,7 @@ from Models.Plant import Plant
 from Models.Server import Server
 from Models.Place import Place
 from Models.Anchor import Anchor
+from Models.Histories.Room_logs import Room_logs
 
 
 import falcon
@@ -54,12 +55,17 @@ app.add_route('/places/{placeID}/rooms', place_resource, suffix='rooms')
 
 room_resource = Room()
 app.add_route('/rooms', room_resource)
-app.add_route('/rooms/{room_ID}/users', room_resource, suffix = 'users')
+app.add_route('/rooms/cards', room_resource, suffix='cards_rooms')
+app.add_route('/rooms/users/count', room_resource, suffix='users_count')
 
 anchor_resource = Anchor()
 app.add_route('/anchors', anchor_resource)
+app.add_route('/anchors/cards', anchor_resource, suffix='matching_cards')
 
 
+room_change_resource = Room_logs()
+app.add_route('/change-room/{userID}', room_change_resource, suffix='change_room')
+app.add_route('/room/{roomID}/past', room_change_resource, suffix='past_users')
 
 
 

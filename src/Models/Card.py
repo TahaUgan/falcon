@@ -42,15 +42,15 @@ class Card(BaseModel):
         if(not id):
             cards = Card.select()
         else:
-            filters.append(Card.ID == id)
+            filters.append(Card.Card_ID == id)
 
             name = req.get_param('name')
-            room_id = req.get_param('room_ID')
+            anchorID = req.get_param('room_ID')
 
             if(name):
-                filters.append(Card.name == name)
-            if(room_id):
-                filters.append(Card.room_ID == room_id)
+                filters.append(Card.Card_Name == name)
+            if(anchorID):
+                filters.append(Card.Anchor_ID == anchorID)
 
             cards = Card.select().where(filters)
 
@@ -120,6 +120,8 @@ class Card(BaseModel):
                 resp.body = json.dumps({"error": "Card already exists"})
                 e_logger.error("Attempted to create card with already existing ID -> ID = " + str(id))
 
+
+
     def on_delete(self, req, resp):
 
          
@@ -138,7 +140,7 @@ class Card(BaseModel):
             resp.status = falcon.HTTP_401
             resp.body = "You have no authority to do so"
             return
-    
+                
 
         id = req.get_param('Card_ID')
 

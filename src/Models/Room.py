@@ -1,10 +1,10 @@
-from peewee import *
 from Models.BaseModel import BaseModel
 from Utility.Loggers import e_logger, s_logger
 
 from Utility.GetIP import get_ip
 from Models.Place import Place
 
+from peewee import *
 import falcon
 import json
 
@@ -71,12 +71,49 @@ class Room(BaseModel):
 
 
     
-    def on_get_users(self, req, resp, room_ID):
-        pass
-        #TO DO
-        #use a query to get users in a room
-        # room -> anchor -> card -> user
+    def on_get_users_count(self, req, resp):
 
+        headers = req.headers
+        
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
+
+        from Utility.Token import Token
+        from Models.Session import Sessions
+
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return
+        
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
+
+
+
+        from Models.Anchor import Anchor
+        from Models.Card import Card
+        from Models.User import User
+
+        users_count = (Room
+                       .select(Room.room_ID, fn.Count(User.user_ID))
+                       .join(Anchor, on=Room.room_ID == Anchor.Room_ID)
+                       .join(Card, on=Anchor.Anchor_ID == Card.Anchor_ID)
+                       .join(User, Card.Card_ID == User.Card_ID)
+                       .where(User.Card_ID != None)
+                       .group_by(Room.room_ID) 
+                       )
+
+
+        users_count = [count for count in users_count.dicts()]
+
+
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(users_count)
 
 
     def on_post(self, req, resp):
@@ -124,61 +161,40 @@ class Room(BaseModel):
 
 
 
+    def on_get_cards_rooms(self ,req, resp):
 
 
-    # def on_delete(self, req, resp):
-         
-    #     headers = req.headers
-
-    #     session = headers.get("SESSION")
-    #     token = headers.get("TOKEN")
-
-    #     from Models.Session import Sessions
-    #     from Utility.Token import Token
-
-    #     is_session = Sessions.check_session(session)
-    #     is_token = Token.check_token(token)
-
-    #     if not is_session or not is_token:
-    #         resp.status = falcon.HTTP_401
-    #         resp.body = "You have no authority to do so"
-    #         return
-    
+        headers = req.headers
         
-    #     id = req.get_param('ID')
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
 
-    #     filters = []
+        from Utility.Token import Token
+        from Models.Session import Sessions
 
-    #     if(not id):
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return
+        
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
+        
+        from Models.Card import Card
+        from Models.Anchor import Anchor
 
-    #         resp.status = falcon.HTTP_400
-    #         resp.body = json.dumps({"error": "ID field required"})
-    #         e_logger.error("Attempted deleting room with no ID -> ID = " + str(id))
+        cards = (Card
+                 .select(Room.room_ID, Card.Card_ID)
+                 .join(Anchor, on=Card.Anchor_ID == Anchor.Anchor_ID)
+                 .join(Room, on= Room.room_ID == Anchor.Room_ID)
+                 
+                 )
+        
+        cards = [card for card in cards.dicts()]
 
-    #     else:
-
-    #         filters.append(Room.ID == id)
-
-    #         name = req.get_param('name')
-
-    #         if(name):
-    #             filters.append(Room.name == name)
-
-    #         try:
-    #             Room.delete().where(filters).execute()
-
-    #             resp.status = falcon.HTTP_200
-
-    #         except IntegrityError:
-
-    #             resp.status = falcon.HTTP_204
-    #             resp.body = json.dumps({"error": "Room Not Found"})
-    #             e_logger.error("Attempted delete non-existing room")
-
-
-
-
-
-
-
-
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(cards)
