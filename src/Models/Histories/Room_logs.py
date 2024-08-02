@@ -172,4 +172,75 @@ class Room_logs(BaseModel):
         
         users = Room_logs.select(Room_logs.User_ID).distinct().where(Room_logs.Room_ID == roomID)
 
-        resp.body = json.dumps([user for user in users.dicts()])
+        users = [user for user in users.dicts()]
+
+        if not users:
+            e_logger.info(f"No results found with given filters, req from IP: {get_ip()}")
+            resp.status = falcon.HTTP_400
+            resp.body = f"No results found with given date interval"
+            return
+
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(users)
+
+
+
+
+
+
+
+    def on_get_user_history(self, req, resp, UserID):
+
+
+        headers = req.headers
+        
+        token = headers.get("TOKEN")
+        session = headers.get("SESSION")
+
+        from Utility.Token import Token
+        from Models.Session import Sessions
+
+        if not token or not session:
+            resp.status = falcon.HTTP_400
+            resp.body = json.dumps({"error": "Missing authenticative data"})
+            e_logger.error("Missing authenticative data")
+            return
+        
+        if not Token.check_token(token) or not Sessions.check_session(session):
+            resp.status = falcon.HTTP_401
+            resp.body = json.dumps({"error": "You don't have the authority to do so"})
+            e_logger.error("Unauthorized access attempt")
+            return
+        
+        start_date = headers.get("START-DATE")
+        end_date = headers.get("END-DATE")
+
+        hists = (Room_logs
+                .select(Room_logs.Room_ID, Room_logs.Log_Date)
+                .where(Room_logs.User_ID == UserID, Room_logs.Log_Type =='IN', Room_logs.Log_Date.between(start_date, end_date))
+                
+                )
+
+
+        print(f"here is the QUERY: \n{hists}")
+
+        hists = list(hists.dicts())
+
+        print(f"Here is results for the QUERY: \n{hists}")
+
+
+        if not hists:
+            e_logger.info(f"No results found with given filters, req from IP: {get_ip()}")
+            resp.status = falcon.HTTP_400
+            resp.body = f"No results found with given date interval"
+            return
+        
+
+        for hist in hists:
+            hist['Log_Date'] = hist['Log_Date'].isoformat()
+
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(hists)
+
+
+

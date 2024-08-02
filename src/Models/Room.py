@@ -97,12 +97,12 @@ class Room(BaseModel):
         from Models.User import User
 
         users_count = (Room
-                    .select(Room.room_ID)
+                    .select(Room.room_ID, fn.Count(Card.Card_ID))
                     .join(Anchor, on=Room.room_ID == Anchor.Room_ID)
                     .join(Card, on=Anchor.Anchor_ID == Card.Anchor_ID)
                     .join(User, on=Card.Card_ID == User.Card_ID)
-                    # .where(User.Card_ID.is_null(False))
-                    # .group_by(Room.room_ID) 
+                    .where(User.Card_ID.is_null(False))
+                    .group_by(Room.room_ID) 
                     )
 
 
@@ -110,7 +110,7 @@ class Room(BaseModel):
 
         resp.status = falcon.HTTP_200
         resp.body = json.dumps(users_count)
-        resp.body = users_count
+        
 
 
     def on_post(self, req, resp):

@@ -66,6 +66,7 @@ app.add_route('/anchors/cards', anchor_resource, suffix='matching_cards')
 room_change_resource = Room_logs()
 app.add_route('/change-room/{userID}', room_change_resource, suffix='change_room')
 app.add_route('/room/{roomID}/past', room_change_resource, suffix='past_users')
+app.add_route('/rooms/{UserID}/past', room_change_resource, suffix='user_history')
 
 
 
