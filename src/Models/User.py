@@ -3,6 +3,7 @@ from Models.BaseModel import BaseModel, db
 from Utility.Loggers import e_logger, s_logger, r_logger
 from Models.Card import Card
 from Utility.GetIP import get_ip
+
 import random
 import string
 import falcon
