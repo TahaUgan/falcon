@@ -1,4 +1,4 @@
-# User Record API
+# User Activity Track API
 
 ## Installation
 
