@@ -1,7 +1,17 @@
 .ini
 authorization.ini
 
-*.log
+.log
 logs/error.log
 logs/log_in_out.log
 logs/requests.log
+logs/*
+
+.idea
+
+.venv
+
+.vscode
+
+
+
