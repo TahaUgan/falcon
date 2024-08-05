@@ -47,4 +47,4 @@
 
 This output indicates that the API is returning user data correctly, confirming that your setup is complete and functional.
 
-By following these steps, you ensure that your User Activity Track API is installed, configured, and ready for use.
+By following these steps, you can ensure that your User Activity Track API is installed, configured, and ready for use.
