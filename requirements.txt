@@ -1,0 +1,9 @@
+peewee
+PyMySQL
+mysqlclient
+falcon
+requests
+urllib3
+charset-normalizer
+packaging
+idna
