@@ -11,6 +11,8 @@ from Models.Anchor import Anchor
 from Models.Histories.Room_logs import Room_logs
 
 
+
+
 import falcon
 
 
@@ -74,4 +76,5 @@ if __name__ == '__main__':
     from wsgiref.simple_server import make_server
     with make_server('', 8001, app) as httpd:
         print('Serving on port 8001...')
+        print(httpd.socket)
         httpd.serve_forever()
