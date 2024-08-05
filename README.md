@@ -11,26 +11,13 @@ Secondly, you need to fill in necessary parts in `authorization.ini` file in the
 After all these steps, you can test if your project works or not using, `TestRequest.py` file. Result should be something like this:
 
 ```
-[
-
-{
-
+[{
 "user_ID":  1,
-
 "username":  "exampleUser",
-
 "email":  null,
-
 "password":  "examplePassword",
-
 "session":  "exampleSession",
-
 "Card_ID":  null,
-
 "Company_ID":  null
-
-}
-
-]
-
+}]
 ```
